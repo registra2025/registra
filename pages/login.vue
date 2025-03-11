@@ -1,4 +1,6 @@
 <script setup>
+definePageMeta({ middleware: "auth" });
+
 import { ref } from "vue";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useRouter } from 'vue-router';
