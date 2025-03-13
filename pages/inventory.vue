@@ -1,8 +1,8 @@
 <script setup>
-definePageMeta({ middleware: "auth" });
 import { ref, onMounted } from "vue";
 import { getFirestore, collection, getDocs, addDoc, onSnapshot } from "firebase/firestore";
 import { getApp } from "firebase/app";
+import Scan from './scan.vue'; // Import the scan component
 
 // Ensure Firebase app is initialized
 const db = getFirestore(getApp());
@@ -55,30 +55,24 @@ const addNewItem = async () => {
 
   newProduct.value = { itemId: "", itemName: "", itemPrice: "", itemQty: "" };
 };
+
+// Function to handle scanned barcode input
+const handleScannedBarcode = (scannedBarcode) => {
+  newProduct.value.itemId = scannedBarcode; // Set scanned barcode to itemId field
+};
+
+// Camera active state for barcode scanning
+const isCameraActive = ref(false);
+
+// Toggle Camera On/Off for Barcode Scanning
+const toggleCamera = () => {
+  isCameraActive.value = !isCameraActive.value;
+};
 </script>
 
 <template>
   <div class="p-6">
     <h2 class="text-2xl font-bold mb-4">Inventory</h2>
-    
-    <table class="border-collapse w-full">
-      <thead>
-        <tr class="bg-gray-200">
-          <th class="border p-2">Item ID</th>
-          <th class="border p-2">Name</th>
-          <th class="border p-2">Price</th>
-          <th class="border p-2">Quantity</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in inventory" :key="item.id">
-          <td class="border p-2">{{ item.itemId }}</td>
-          <td class="border p-2">{{ item.itemName }}</td>
-          <td class="border p-2">${{ item.itemPrice }}</td>
-          <td class="border p-2">{{ item.itemQty }}</td>
-        </tr>
-      </tbody>
-    </table>
 
     <div class="mt-4">
       <h3 class="text-lg font-bold">Add Product</h3>
@@ -86,7 +80,18 @@ const addNewItem = async () => {
       <input v-model="newProduct.itemName" placeholder="Name" class="border p-2 m-1" />
       <input v-model="newProduct.itemPrice" placeholder="Price" class="border p-2 m-1" />
       <input v-model="newProduct.itemQty" placeholder="Quantity" class="border p-2 m-1" />
+      
       <button @click="addNewItem" class="bg-green-500 text-white p-2">Add</button>
+      <!-- Scan Button -->
+      <button @click="toggleCamera" class="bg-blue-500 text-white p-2 ml-2">Scan</button>
+    </div>
+    
+    <!-- Scan Barcode Modal (Only Show When Scan is Active) -->
+    <scan @scanBarcode="handleScannedBarcode" v-if="isCameraActive" />
+    
+    <!-- Barcode Text Display Below Camera (This will auto-populate the Item ID field) -->
+    <div v-if="isCameraActive" class="mt-4">
+      <p class="text-lg font-semibold">Scanned Barcode: {{ newProduct.itemId }}</p>
     </div>
   </div>
 </template>

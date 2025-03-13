@@ -1,5 +1,10 @@
 <script setup>
 import { useHead } from 'nuxt/app';
+import { provide } from 'vue';
+import { userStore } from '@/stores/userStore';
+
+userStore.initialize();
+provide('userStore', userStore);
 
 useHead({
   link: [
