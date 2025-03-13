@@ -13,6 +13,7 @@
     "@pinia/nuxt": "^0.10.1",
     "@tailwindcss/vite": "^4.0.12",
     "@vueuse/firebase": "^12.8.2",
+    "@zxing/browser": "^0.1.5",
     "firebase": "^11.4.0",
     "nuxt": "^3.16.0",
     "pinia": "^3.0.1",

@@ -8,7 +8,7 @@ definePageMeta({ middleware: "auth" });
   </div>
   <div>
       <!-- <h1>Home Page Content</h1> -->
-  <div class="grid grid-cols-3">
+  <div class="grid grid-cols-3 content-center">
     <div class="w-full max-w-[258px] h-[135px] bg-[#0f243d] rounded-[7px] flex items-center justify-center">
       <a href="/purchase" class="text-white text-[32px]">PURCHASE</a>
     </div>
