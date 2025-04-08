@@ -3,13 +3,15 @@
       v-show="isSidebarOpen"
       class="sidebar w-[360px] bg-[#0f233d] px-6 py-4 transition-all duration-300 flex-shrink-0 h-screen flex flex-col pt-[90px]"
     >
-      <div class="flex justify-center pb-4">
+    <div class="flex justify-center pb-4">
+      <NuxtLink :to="user ? '/dashboard' : '/'">
         <img
           src="/reg_logo_rm.png"
           alt="Logo"
           class="w-[200px] h-[200px] object-contain max-w-full max-h-full md:w-[300px] md:h-[200px] sm:w-[120px] sm:h-[120px]"
         />
-      </div>
+      </NuxtLink>
+    </div>
   
       <div class="flex-grow flex flex-col gap-2 overflow-y-auto">
         <template v-if="user">

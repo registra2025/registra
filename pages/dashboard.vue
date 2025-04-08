@@ -13,7 +13,7 @@ definePageMeta({ middleware: "auth" });
       <NuxtLink to="/sales" class="text-white text-[32px]">SALES</NuxtLink>
     </div>
     <div class="w-full max-w-[258px] h-[135px] bg-[#0f243d] rounded-[7px] flex items-center justify-center">
-      <NuxtLink to="/scan" class="text-white text-[32px]">SCAN</NuxtLink>
+      <NuxtLink to="/scanpr" class="text-white text-[32px]">SCAN</NuxtLink>
     </div>
   </div>
     </div>
