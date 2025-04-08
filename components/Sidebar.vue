@@ -5,7 +5,7 @@
     >
       <div class="flex justify-center pb-4">
         <img
-          src="/reg_logo_rm.jpg"
+          src="/reg_logo_rm.png"
           alt="Logo"
           class="w-[200px] h-[200px] object-contain max-w-full max-h-full md:w-[300px] md:h-[200px] sm:w-[120px] sm:h-[120px]"
         />

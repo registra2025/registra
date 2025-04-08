@@ -5,15 +5,15 @@ definePageMeta({ middleware: "auth" });
 <template>
   <div>
       <!-- <h1>Home Page Content</h1> -->
-  <div class="grid grid-cols-3 content-center">
+  <div class="flex flex-row justify-between p-10">
     <div class="w-full max-w-[258px] h-[135px] bg-[#0f243d] rounded-[7px] flex items-center justify-center">
-      <a href="/purchase" class="text-white text-[32px]">PURCHASE</a>
+      <Nuxtlink to="/purchase" class="text-white text-[32px]">PURCHASE</Nuxtlink>
     </div>
     <div class="w-full max-w-[258px] h-[135px] bg-[#0f243d] rounded-[7px] flex items-center justify-center">
-      <a href="/sales" class="text-white text-[32px]">SALES</a>
+      <Nuxtlink to="/sales" class="text-white text-[32px]">SALES</Nuxtlink>
     </div>
     <div class="w-full max-w-[258px] h-[135px] bg-[#0f243d] rounded-[7px] flex items-center justify-center">
-      <a href="/scan" class="text-white text-[32px]">SCAN</a>
+      <Nuxtlink to="/scan" class="text-white text-[32px]">SCAN</Nuxtlink>
     </div>
   </div>
     </div>
