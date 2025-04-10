@@ -35,7 +35,7 @@
   </template>
   
 <script setup>
-import { defineEmits, ref, onMounted, defineProps } from 'vue';
+import { defineEmits, ref, onMounted} from 'vue';
 import { getAuth, signOut } from 'firebase/auth';
 import { navigateTo } from '#app';
 
