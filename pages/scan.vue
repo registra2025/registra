@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted, defineEmits } from 'vue';
+import { ref, onMounted, onUnmounted} from 'vue';
 import { BrowserMultiFormatReader } from '@zxing/browser';
 
 const emit = defineEmits();
