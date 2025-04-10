@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { getFirestore, collection, getDocs, addDoc, onSnapshot } from "firebase/firestore";
+import { getFirestore, collection, getDocs, addDoc, onSnapshot, query, where, getDoc, doc } from "firebase/firestore";
 import { getApp } from "firebase/app";
 import Scan from './scan.vue'; // Import the scan component
 
@@ -37,7 +37,14 @@ const newProduct = ref({
   itemName: "",
   itemPrice: "",
   itemQty: "",
-});
+})
+
+// Function to check if itemId already exists in the inventory
+const checkItemIdExists = async (itemId) => {
+  const q = query(collection(db, "inventory"), where("itemId", "==", itemId));
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.empty; // returns true if itemId is unique (doesn't exist)
+};
 
 // Function to add a new product to Firestore
 const addNewItem = async () => {
@@ -46,6 +53,16 @@ const addNewItem = async () => {
     return;
   }
 
+  const itemId = Number(newProduct.value.itemId);
+  
+  // Check if itemId already exists
+  const itemIdExists = await checkItemIdExists(itemId);
+  if (!itemIdExists) {
+    alert("Item ID already exists. Enter another Item");
+    return;
+  }
+
+  // Proceed to add item if ID is unique
   await addDoc(collection(db, "inventory"), {
     itemId: Number(newProduct.value.itemId),
     itemName: newProduct.value.itemName,
@@ -68,10 +85,17 @@ const isCameraActive = ref(false);
 const toggleCamera = () => {
   isCameraActive.value = !isCameraActive.value;
 };
+
+// Stop camera after scanning
+const stopCamera = () => {
+  isCameraActive.value = false;  // Close the camera after the barcode is scanned
+};
+
+
 </script>
 
 <template>
-  <div class="p-6">
+  <div class="p-6 max0h-screen">
     <h2 class="text-2xl font-bold mb-4">Inventory</h2>
 
     <div class="mt-4">
@@ -87,11 +111,6 @@ const toggleCamera = () => {
     </div>
     
     <!-- Scan Barcode Modal (Only Show When Scan is Active) -->
-    <scan @scanBarcode="handleScannedBarcode" v-if="isCameraActive" />
-    
-    <!-- Barcode Text Display Below Camera (This will auto-populate the Item ID field) -->
-    <div v-if="isCameraActive" class="mt-4">
-      <p class="text-lg font-semibold">Scanned Barcode: {{ newProduct.itemId }}</p>
-    </div>
+    <scan @scanBarcode="handleScannedBarcode" @stopCamera="stopCamera" v-if="isCameraActive" />
   </div>
 </template>

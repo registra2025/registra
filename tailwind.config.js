@@ -7,8 +7,14 @@ export default {
       './app.vue',
       './plugins/**/*.{js,ts}',
     ],
+    darkMode: 'class', // important: use class strategy
     theme: {
-      extend: {},
+      extend: {
+        colors: {
+            darkBg: '#1e1e2d',
+            darkText: '#e5e5e5',
+          },
+      },
     },
     plugins: [],
   };

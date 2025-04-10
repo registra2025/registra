@@ -37,6 +37,11 @@ onMounted(() => {
   <div class="p-6">
     <h2 class="text-2xl font-bold mb-4">Inventory</h2>
     
+    <div v-if="loading" class="text-center py-12">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#2966b1] mx-auto"></div>
+        <p class="mt-4 text-gray-600">Loading product details...</p>
+      </div>
+
     <table class="border-collapse w-full">
       <thead>
         <tr class="bg-gray-200">

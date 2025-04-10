@@ -44,12 +44,12 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div class="flex min-h-screen">
+  <div class="flex max-h-screen">
     <!-- Sidebar -->
     <Sidebar :isSidebarOpen="isSidebarOpen" @toggleSidebar="toggleSidebar" />
 
     <!-- Main Content Wrapper -->
-    <div class="flex flex-col flex-grow">
+    <div class="flex flex-col flex-grow bg-white dark:bg-darkBg text-black dark:text-darkText transition-colors duration-300 overflow-y-auto">
       <!-- Dynamic Navbar -->
       <NavbarGuest v-if="!user" @toggleSidebar="toggleSidebar" />
       <NavbarUser v-else :title="pageTitle" @toggleSidebar="toggleSidebar" />
