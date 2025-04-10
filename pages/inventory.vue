@@ -95,7 +95,7 @@ const stopCamera = () => {
 </script>
 
 <template>
-  <div class="p-6">
+  <div class="p-6 max0h-screen">
     <h2 class="text-2xl font-bold mb-4">Inventory</h2>
 
     <div class="mt-4">

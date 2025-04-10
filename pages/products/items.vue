@@ -2,12 +2,11 @@
 import { ref, onMounted } from 'vue';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 import { getApp } from 'firebase/app';
-import { useRoute, useRouter } from '#app';
+import { useRoute } from '#app';
 
 const route = useRoute();
-const router = useRouter();
-const db = getFirestore(getApp());
 
+const db = getFirestore(getApp());
 const product = ref(null);
 const loading = ref(true);
 const error = ref(null);
@@ -109,6 +108,7 @@ onMounted(async () => {
                 <h3 class="text-sm font-medium text-gray-500">Quantity in Stock</h3>
                 <p class="text-lg font-semibold">{{ product.itemQty }}</p>
               </div>
+
             </div>
           </div>
         </div>
