@@ -12,7 +12,7 @@ const router = useRouter();
 const login = async () => {
   try {
     await signInWithEmailAndPassword(auth, email.value, password.value);
-    alert("Login successful!");
+    // alert("Login successful!");
     router.push("/dashboard");
   } catch (error) {
     alert(error.message);

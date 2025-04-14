@@ -1,5 +1,5 @@
 <template>
-    <header class="w-full h-[82px] bg-white border-b-2 border-[#2966b1] flex items-center px-8 fixed top-0 left-0 right-0 z-50">
+    <header  class="w-[calc(100%-0.5rem)] h-[73px] bg-white border-2 border-[#2966b1] flex items-center px-4 fixed top-1 left-1 right-1 z-50 rounded-[15px] shadow-lg">
       <button @click="emit('toggleSidebar')" class="text-[#2966b1] text-[32px] p-2">
         <span class="material-symbols-outlined">menu</span>
       </button>
@@ -35,7 +35,7 @@
   </template>
   
 <script setup>
-import { defineEmits, ref, onMounted} from 'vue';
+import { ref, onMounted} from 'vue';
 import { getAuth, signOut } from 'firebase/auth';
 import { navigateTo } from '#app';
 

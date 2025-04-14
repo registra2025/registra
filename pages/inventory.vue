@@ -1,4 +1,7 @@
 <script setup>
+definePageMeta({
+  middleware: 'auth-global'
+});
 import { ref, onMounted } from "vue";
 import { getFirestore, collection, getDocs, addDoc, onSnapshot, query, where, getDoc, doc } from "firebase/firestore";
 import { getApp } from "firebase/app";

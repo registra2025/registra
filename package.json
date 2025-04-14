@@ -15,8 +15,9 @@
     "@vueuse/firebase": "^12.8.2",
     "@zxing/browser": "^0.1.5",
     "firebase": "^11.4.0",
+    "html2pdf.js": "^0.10.3",
     "nuxt": "^3.16.0",
-    "pinia": "^3.0.1",
+    "pinia": "^3.0.2",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
