@@ -1,7 +1,7 @@
 <template>
     <aside
       v-show="isSidebarOpen"
-      class="sidebar w-[fit] bg-[#0f233d] px-6 py-4 transition-all duration-300 flex-shrink-0 h-[calc(100vh-0.5rem)] flex flex-col pt-[90px] rounded-[15px] m-1 shadow-lg">
+      class="sidebar w-[fit] bg-[#1c4375] px-6 py-4 transition-all duration-300 flex-shrink-0 h-[calc(100vh-0.5rem)] flex flex-col pt-[90px] rounded-[15px] m-1 shadow-lg">
     <div class="flex justify-center pb-4">
       <NuxtLink :to="user ? '/dashboard' : '/'">
         <img
@@ -14,16 +14,16 @@
   
       <div class="flex-grow flex flex-col gap-2 overflow-y-auto">
         <template v-if="user">
-         <NuxtLink to="/dashboard" class="w-[307px] min-h-[49px] bg-[#1C4577] rounded-[7px] flex items-center text-white pl-4 text-[25px] font-light">DASHBOARD</NuxtLink>
-         <NuxtLink to="/cart" class="w-[307px] min-h-[49px] bg-[#1C4577] rounded-[7px] flex items-center pl-4 text-white text-[25px] font-light">CART</NuxtLink>
-         <NuxtLink to="/sales-receipt" class="w-[307px] min-h-[49px] bg-[#1C4577] rounded-[7px] flex items-center pl-4 text-white text-[25px] font-light">SALES RECEIPT</NuxtLink>
+         <NuxtLink to="/dashboard" class="w-[307px] min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-normal">DASHBOARD</NuxtLink>
+         <NuxtLink to="/cart" class="w-[307px] min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-[25px] font-normal">CART</NuxtLink>
+         <NuxtLink to="/sales-receipt" class="w-[307px] min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-[25px] font-normal">SALES RECEIPT</NuxtLink>
         </template>
   
         <template v-else>
-          <NuxtLink to="/about" class="w-[307px] h-[49px] bg-[#1C4577] rounded-[7px] flex items-center text-white pl-4 text-[25px] font-light">ABOUT US</NuxtLink>
-          <NuxtLink to="/contact" class="w-[307px] h-[49px] bg-[#1C4577] rounded-[7px] flex items-center text-white pl-4 text-[25px] font-light">CONTACT US</NuxtLink>
-          <NuxtLink to="/faq" class="w-[307px] h-[49px] bg-[#1C4577] rounded-[7px] flex items-center text-white pl-4 text-[25px] font-light">FAQ</NuxtLink>
-          <NuxtLink to="/pricing" class="w-[307px] h-[49px] bg-[#1C4577] rounded-[7px] flex items-center text-white pl-4 text-[25px] font-light">PRICING</NuxtLink>
+          <NuxtLink to="/about" class="w-[307px] h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-light">ABOUT US</NuxtLink>
+          <NuxtLink to="/contact" class="w-[307px] h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-light">CONTACT US</NuxtLink>
+          <NuxtLink to="/faq" class="w-[307px] h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-light">FAQ</NuxtLink>
+          <NuxtLink to="/pricing" class="w-[307px] h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-light">PRICING</NuxtLink>
         </template>
       </div>
     </aside>

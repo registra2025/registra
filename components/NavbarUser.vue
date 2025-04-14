@@ -1,7 +1,10 @@
 <template>
     <header  class="w-[calc(100%-0.5rem)] h-[73px] bg-white border-2 border-[#2966b1] flex items-center px-4 fixed top-1 left-1 right-1 z-50 rounded-[15px] shadow-lg">
-      <button @click="emit('toggleSidebar')" class="text-[#2966b1] text-[32px] p-2">
-        <span class="material-symbols-outlined">menu</span>
+      <button
+      @click="emit('toggleSidebar')"
+      class="text-[#2966b1] text-[32px] w-13 h-13 p-0.5 border-1 border-[#2966b1] rounded-md transition transform  active:scale-90 duration-100 ease-in-out"
+      >
+      <span class="material-symbols-outlined">menu</span>
       </button>
       <h1 class="text-[#2966b1] text-[32px] ml-4">{{ title }}</h1>
       <!-- Dark Mode Toggle -->

@@ -1,5 +1,5 @@
 <template>
-   <div class="p-4 bg-white dark:bg-gray-900 min-h-full text-gray-800 dark:text-white rounded-[17px] -m-4">
+   <div class="p-4 bg-[#1c4375] min-h-full text-gray-800 dark:text-white rounded-[17px] -m-4">
       <!-- Header -->
       <div class="flex justify-between items-center mb-6">
          <h1 class="text-2xl font-bold">New Sale</h1>

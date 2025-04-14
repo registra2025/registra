@@ -7,15 +7,15 @@ definePageMeta({
 <template>
   <div>
     <div class="flex flex-row justify-between p-10 gap-4">
-      <NuxtLink to="/sales" class="w-full max-w-[258px] h-[135px] bg-[#0f243d] text-white text-[32px] rounded-[7px] flex items-center justify-center transition hover:bg-[#1a3352] active:shadow-inner active:bg-[#1a3352]">
+      <NuxtLink to="/sales" class="w-full max-w-[258px] h-[135px] bg-[#1c4375] text-white text-[32px] rounded-[7px] flex items-center justify-center transition hover:bg-[#1a3352] active:shadow-inner active:bg-[#1a3352]">
         SALES
       </NuxtLink>
 
-      <NuxtLink to="/purchase" class="w-full max-w-[258px] h-[135px] bg-[#0f243d] text-white text-[32px] rounded-[7px] flex items-center justify-center transition hover:bg-[#1a3352] active:shadow-inner active:bg-[#1a3352]">
+      <NuxtLink to="/purchase" class="w-full max-w-[258px] h-[135px] bg-[#1c4375] text-white text-[32px] rounded-[7px] flex items-center justify-center transition hover:bg-[#1a3352] active:shadow-inner active:bg-[#1a3352]">
         PURCHASE
       </NuxtLink>
 
-      <NuxtLink to="/scanpr" class="w-full max-w-[258px] h-[135px] bg-[#0f243d] text-white text-[32px] rounded-[7px] flex items-center justify-center transition hover:bg-[#1a3352] active:shadow-inner active:bg-[#1a3352]">
+      <NuxtLink to="/scanpr" class="w-full max-w-[258px] h-[135px] bg-[#1c4375] text-white text-[32px] rounded-[7px] flex items-center justify-center transition hover:bg-[#1a3352] active:shadow-inner active:bg-[#1a3352]">
         SCAN
       </NuxtLink>
     </div>

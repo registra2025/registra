@@ -56,6 +56,7 @@ watchEffect(() => {
       <NavbarGuest v-if="!user" @toggleSidebar="toggleSidebar" />
       <NavbarUser v-else :title="pageTitle" @toggleSidebar="toggleSidebar" />
 
+     
       <main class="flex-grow overflow-y-auto px-8 py-4 mt-[95px] m-1 mb-1 mr-1 rounded-[15px] bg-white dark:bg-darkBg shadow-md">
         <slot />
       </main>
