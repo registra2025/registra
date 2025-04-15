@@ -1,20 +1,23 @@
 <script setup>
-definePageMeta({ middleware: "auth" });
+definePageMeta({
+  middleware: 'auth-global'
+});
 </script>
 
 <template>
   <div>
-      <!-- <h1>Home Page Content</h1> -->
- <div class="flex flex-row justify-between p-10">
-    <div class="w-full max-w-[258px] h-[135px] bg-[#0f243d] rounded-[7px] flex items-center justify-center">
-      <NuxtLink to="/sales" class="text-white text-[32px]">SALES</NuxtLink>
-    </div>
-    <div class="w-full max-w-[258px] h-[135px] bg-[#0f243d] rounded-[7px] flex items-center justify-center">
-      <NuxtLink to="/purchase" class="text-white text-[32px]">PURCHASE</NuxtLink>
-    </div>
-    <div class="w-full max-w-[258px] h-[135px] bg-[#0f243d] rounded-[7px] flex items-center justify-center">
-      <NuxtLink to="/scanpr" class="text-white text-[32px]">SCAN</NuxtLink>
+    <div class="flex flex-row justify-between p-10 gap-4">
+      <NuxtLink to="/sales" class="w-full max-w-[258px] h-[135px] bg-[#1c4375] text-white text-[32px] rounded-[7px] flex items-center justify-center transition hover:bg-[#1a3352] active:shadow-inner active:bg-[#1a3352]">
+        SALES
+      </NuxtLink>
+
+      <NuxtLink to="/purchase" class="w-full max-w-[258px] h-[135px] bg-[#1c4375] text-white text-[32px] rounded-[7px] flex items-center justify-center transition hover:bg-[#1a3352] active:shadow-inner active:bg-[#1a3352]">
+        PURCHASE
+      </NuxtLink>
+
+      <NuxtLink to="/scanpr" class="w-full max-w-[258px] h-[135px] bg-[#1c4375] text-white text-[32px] rounded-[7px] flex items-center justify-center transition hover:bg-[#1a3352] active:shadow-inner active:bg-[#1a3352]">
+        SCAN
+      </NuxtLink>
     </div>
   </div>
-    </div>
 </template>

@@ -1,5 +1,7 @@
 <script setup>
-// definePageMeta({ middleware: "auth" });
+definePageMeta({
+  middleware: 'auth-global'
+});
 </script>
 <template>
     <div class="p-6">
