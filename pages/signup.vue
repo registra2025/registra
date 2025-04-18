@@ -4,6 +4,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, Go
 import { useRouter } from 'vue-router';
 import { userStore } from '@/stores/userStore'; // Import the userStore
 
+const confirmPassword = ref("");
 const email = ref("");
 const password = ref("");
 const auth = getAuth();
@@ -20,9 +21,11 @@ const login = async () => {
       router.push("/dashboard");
     }
   } catch (error) {
+    console.error('Firebase error:', error);
     alert(error.message);
   }
 };
+
 
 const signUp = async () => {
   try {
@@ -30,6 +33,7 @@ const signUp = async () => {
     alert("Account created successfully!");
     router.push("/dashboard");
   } catch (error) {
+    console.error('Firebase error:', error);
     alert(error.message);
   }
 };
@@ -41,6 +45,7 @@ const googleSignIn = async () => {
     alert("Logged in with Google!");
     router.push("/dashboard");
   } catch (error) {
+    console.error('Firebase error:', error);
     alert(error.message);
   }
 };

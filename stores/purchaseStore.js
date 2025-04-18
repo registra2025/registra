@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const useSaleStore = defineStore('sale', {
+export const usePurchaseStore = defineStore('purchase', {
   state: () => ({
     invoice: '',
     customer: '',
@@ -9,7 +9,7 @@ export const useSaleStore = defineStore('sale', {
     products: []
   }),
   actions: {
-    setSaleData({ invoice, customer, date, payment, products }) {
+    setPurchaseData({ invoice, customer, date, payment, products }) {
       this.invoice = invoice
       this.customer = customer
       this.date = date

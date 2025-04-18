@@ -16,14 +16,15 @@
         <template v-if="user">
          <NuxtLink to="/dashboard" class="w-[307px] min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-normal">DASHBOARD</NuxtLink>
          <NuxtLink to="/cart" class="w-[307px] min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-[25px] font-normal">CART</NuxtLink>
-         <NuxtLink to="/sales-receipt" class="w-[307px] min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-[25px] font-normal">SALES RECEIPT</NuxtLink>
+         <!-- <NuxtLink to="/sales-receipt" class="w-[307px] min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-[25px] font-normal">SALES RECEIPT</NuxtLink> -->
+         <NuxtLink to="/purchase-receipt" class="w-[307px] min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-[25px] font-normal">PURCHASE RECEIPT</NuxtLink>
         </template>
   
         <template v-else>
-          <NuxtLink to="/about" class="w-[307px] h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-light">ABOUT US</NuxtLink>
-          <NuxtLink to="/contact" class="w-[307px] h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-light">CONTACT US</NuxtLink>
-          <NuxtLink to="/faq" class="w-[307px] h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-light">FAQ</NuxtLink>
-          <NuxtLink to="/pricing" class="w-[307px] h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-light">PRICING</NuxtLink>
+          <NuxtLink to="/about" class="w-[307px] h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-normal">ABOUT US</NuxtLink>
+          <NuxtLink to="/contact" class="w-[307px] h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-normal">CONTACT US</NuxtLink>
+          <NuxtLink to="/faq" class="w-[307px] h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-normal">FAQ</NuxtLink>
+          <NuxtLink to="/pricing" class="w-[307px] h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black  pl-4 text-[25px] font-normal">PRICING</NuxtLink>
         </template>
       </div>
     </aside>
@@ -38,10 +39,12 @@
   const user = ref(null);
   
   onMounted(() => {
+  if (process.client) {
     const auth = getAuth();
     onAuthStateChanged(auth, (firebaseUser) => {
       user.value = firebaseUser;
     });
-  });
+  }
+});
   </script>
   

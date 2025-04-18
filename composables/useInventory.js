@@ -10,16 +10,23 @@ export function useInventory() {
   
   // Fetch inventory from Firestore
   const fetchInventory = async () => {
-    const querySnapshot = await getDocs(collection(db, "inventory"));
-    inventory.value = querySnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    }));
-    loading.value = false;
+    if (!process.client) return;
+    try {
+      const querySnapshot = await getDocs(collection(db, "inventory"));
+      inventory.value = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+    } catch (err) {
+      console.error('Firebase error:', err);
+    } finally {
+      loading.value = false;
+    }
   };
   
   // Add new product to Firestore
   const addProduct = async (product) => {
+    if (!process.client) return;
     try {
       await addDoc(collection(db, "inventory"), {
         itemId: product.itemId,
@@ -29,7 +36,7 @@ export function useInventory() {
       });
       fetchInventory();  // Refresh the inventory after adding
     } catch (error) {
-      console.error("Error adding product: ", error);
+      console.error("Firebase error:", error);
     }
   };
 

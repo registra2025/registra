@@ -52,7 +52,7 @@ const logout = async () => {
     await signOut(getAuth());
     navigateTo("/login");
   } catch (error) {
-    console.error("Logout Error:", error);
+    console.error("Firebase error:", error);
   }
 };
 

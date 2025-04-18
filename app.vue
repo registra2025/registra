@@ -2,6 +2,7 @@
 import { useHead } from 'nuxt/app';
 import { provide } from 'vue';
 import { userStore } from '@/stores/userStore';
+import { Analytics } from '@vercel/analytics/nuxt'
 
 userStore.initialize();
 provide('userStore', userStore);
@@ -25,6 +26,7 @@ useHead({
 <template>
     <NuxtLayout>
         <NuxtPage :key="$route.fullPath" />
+        <!-- <Analytics /> -->
     </NuxtLayout>
   </template>
   

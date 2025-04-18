@@ -13,22 +13,15 @@ const firebaseConfig = {
     appId: "1:472865052274:web:7ae2f2c16992060d7e14eb"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-// const db = getFirestore(app);
-
-// export { db, auth };
-// 🔹 Export Firestore instance
-// export const db = getFirestore(app);
 export default defineNuxtPlugin(() => {
-    // 🔹 Ensure Firebase is initialized only once
+  if (process.client) {
+    // Ensure Firebase is initialized only once on the client
     const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
-  
-    // 🔹 Export Firestore instance
     return {
       provide: {
         firestore: getFirestore(app),
+        auth: getAuth(app)
       },
     };
-  });
+  }
+});

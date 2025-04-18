@@ -8,18 +8,26 @@ import { getApp } from "firebase/app";
 import Scan from './scan.vue'; // Import the scan component
 
 // Ensure Firebase app is initialized
-const db = getFirestore(getApp());
+let db;
+if (process.client) {
+  db = getFirestore(getApp());
+}
 
 // Reactive inventory list
 const inventory = ref([]);
 
 // Fetch inventory data from Firestore
 const fetchInventory = async () => {
-  const querySnapshot = await getDocs(collection(db, "inventory"));
-  inventory.value = querySnapshot.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
+  if (!process.client) return;
+  try {
+    const querySnapshot = await getDocs(collection(db, "inventory"));
+    inventory.value = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  } catch (err) {
+    console.error('Firebase error:', err);
+  }
 };
 
 // Real-time listener for Firestore changes
@@ -44,9 +52,15 @@ const newProduct = ref({
 
 // Function to check if itemId already exists in the inventory
 const checkItemIdExists = async (itemId) => {
-  const q = query(collection(db, "inventory"), where("itemId", "==", itemId));
-  const querySnapshot = await getDocs(q);
-  return querySnapshot.empty; // returns true if itemId is unique (doesn't exist)
+  if (!process.client) return false;
+  try {
+    const q = query(collection(db, "inventory"), where("itemId", "==", itemId));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.empty; // returns true if itemId is unique (doesn't exist)
+  } catch (err) {
+    console.error('Firebase error:', err);
+    return false;
+  }
 };
 
 // Function to add a new product to Firestore
@@ -66,14 +80,18 @@ const addNewItem = async () => {
   }
 
   // Proceed to add item if ID is unique
-  await addDoc(collection(db, "inventory"), {
-    itemId: Number(newProduct.value.itemId),
-    itemName: newProduct.value.itemName,
-    itemPrice: Number(newProduct.value.itemPrice),
-    itemQty: Number(newProduct.value.itemQty),
-  });
-
-  newProduct.value = { itemId: "", itemName: "", itemPrice: "", itemQty: "" };
+  if (!process.client) return;
+  try {
+    await addDoc(collection(db, "inventory"), {
+      itemId: Number(newProduct.value.itemId),
+      itemName: newProduct.value.itemName,
+      itemPrice: Number(newProduct.value.itemPrice),
+      itemQty: Number(newProduct.value.itemQty),
+    });
+    newProduct.value = { itemId: "", itemName: "", itemPrice: "", itemQty: "" };
+  } catch (err) {
+    console.error('Firebase error:', err);
+  }
 };
 
 // Function to handle scanned barcode input

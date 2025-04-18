@@ -16,11 +16,13 @@ const user = ref(null);
 const isAdmin = ref(false);
 
 onMounted(() => {
-  const auth = getAuth();
-  onAuthStateChanged(auth, (firebaseUser) => {
-    user.value = firebaseUser;
-    isAdmin.value = firebaseUser?.email === 'admin@registra.com';
-  });
+  if (process.client) {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (firebaseUser) => {
+      user.value = firebaseUser;
+      isAdmin.value = firebaseUser?.email === 'admin@registra.com';
+    });
+  }
 });
 
 // Page title logic
@@ -29,6 +31,7 @@ const pageTitle = ref("DASHBOARD");
 
 const pageTitles = {
   "/dashboard": "DASHBOARD",
+  "/dashboard-admin": "DASHBOARD-ADMIN",
   "/inventory": "INVENTORY",
   "/stock-record": "STOCK RECORD",
   "/availability": "AVAILABILITY",

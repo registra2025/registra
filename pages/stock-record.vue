@@ -7,18 +7,26 @@ import { getFirestore, collection, getDocs, addDoc, onSnapshot } from "firebase/
 import { getApp } from "firebase/app";
 
 // Ensure Firebase app is initialized
-const db = getFirestore(getApp());
+let db;
+if (process.client) {
+  db = getFirestore(getApp());
+}
 
 // Reactive inventory list
 const inventory = ref([]);
 
 // Fetch inventory data from Firestore
 const fetchInventory = async () => {
-  const querySnapshot = await getDocs(collection(db, "inventory"));
-  inventory.value = querySnapshot.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
+  if (!process.client) return;
+  try {
+    const querySnapshot = await getDocs(collection(db, "inventory"));
+    inventory.value = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  } catch (err) {
+    console.error('Firebase error:', err);
+  }
 };
 
 // Real-time listener for Firestore changes
