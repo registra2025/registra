@@ -32,7 +32,7 @@
   
   <script setup>
   import { ref, onMounted } from "vue";
-  import { getAuth, onAuthStateChanged } from "firebase/auth";
+  import { onAuthStateChanged } from "firebase/auth";
   
   defineProps(["isSidebarOpen"]);
   
@@ -40,8 +40,8 @@
   
   onMounted(() => {
   if (process.client) {
-    const auth = getAuth();
-    onAuthStateChanged(auth, (firebaseUser) => {
+    const { $auth } = useNuxtApp();
+    onAuthStateChanged($auth, (firebaseUser) => {
       user.value = firebaseUser;
     });
   }

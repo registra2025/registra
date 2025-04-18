@@ -29,4 +29,6 @@
  
  <script setup>
  defineProps(["isSidebarOpen"]);
+// Use $auth from useNuxtApp if needed
+
  </script>

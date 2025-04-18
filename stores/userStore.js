@@ -1,5 +1,5 @@
 import { ref, computed } from 'vue';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 
 // userStore.js
 export const userStore = {
@@ -9,8 +9,8 @@ export const userStore = {
  
    initialize() {
   if (!process.client) return;
-  const auth = getAuth();
-  onAuthStateChanged(auth, (firebaseUser) => {
+  const { $auth } = useNuxtApp();
+  onAuthStateChanged($auth, (firebaseUser) => {
     this.user.value = firebaseUser;
     this.isAdmin.value = firebaseUser?.email === "admin@registra.com";
   });

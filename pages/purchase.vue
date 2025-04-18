@@ -121,16 +121,13 @@
 
 <script setup>
 import { ref, computed, onUnmounted, onMounted } from 'vue'
-import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore'
-import { getApp } from 'firebase/app'
+import { collection, query, where, getDocs } from 'firebase/firestore'
 import { usePurchaseStore } from '~/stores/purchaseStore'
 import scan from './scan.vue'
 
 const purchaseStore = usePurchaseStore()
-let db;
-if (process.client) {
-  db = getFirestore(getApp());
-}
+const { $firestore } = useNuxtApp();
+const db = $firestore;
 const formattedDateTime = ref('')
 const scannedCode = ref('')
 const isCameraActive = ref(false)

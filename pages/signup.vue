@@ -1,18 +1,18 @@
 <script setup>
 import { ref } from 'vue';
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useRouter } from 'vue-router';
 import { userStore } from '@/stores/userStore'; // Import the userStore
 
 const confirmPassword = ref("");
 const email = ref("");
 const password = ref("");
-const auth = getAuth();
+const { $auth } = useNuxtApp();
 const router = useRouter();
 
 const login = async () => {
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email.value, password.value);
+    const userCredential = await signInWithEmailAndPassword($auth, email.value, password.value);
     const user = userCredential.user;
 
     if (user.email === "admin@registra.com") {
@@ -29,7 +29,7 @@ const login = async () => {
 
 const signUp = async () => {
   try {
-    await createUserWithEmailAndPassword(auth, email.value, password.value);
+    await createUserWithEmailAndPassword($auth, email.value, password.value);
     alert("Account created successfully!");
     router.push("/dashboard");
   } catch (error) {
@@ -41,7 +41,7 @@ const signUp = async () => {
 const googleSignIn = async () => {
   const provider = new GoogleAuthProvider();
   try {
-    await signInWithPopup(auth, provider);
+    await signInWithPopup($auth, provider);
     alert("Logged in with Google!");
     router.push("/dashboard");
   } catch (error) {

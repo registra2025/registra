@@ -39,7 +39,7 @@
   
 <script setup>
 import { ref, onMounted} from 'vue';
-import { getAuth, signOut } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
 import { navigateTo } from '#app';
 
 const emit = defineEmits(['toggleSidebar']);
@@ -49,7 +49,8 @@ const props = defineProps({
 
 const logout = async () => {
   try {
-    await signOut(getAuth());
+    const { $auth } = useNuxtApp();
+    await signOut($auth);
     navigateTo("/login");
   } catch (error) {
     console.error("Firebase error:", error);

@@ -1,6 +1,6 @@
 // src/composables/useInventory.js
 import { ref } from 'vue';
-import { db } from '@/firebase';  // Import your Firestore db
+import { useNuxtApp } from '#app';
 import { collection, getDocs, addDoc } from 'firebase/firestore';
 
 export function useInventory() {
@@ -8,6 +8,9 @@ export function useInventory() {
   const inventory = ref([]);
   const loading = ref(true);
   
+  const { $firestore } = useNuxtApp();
+  const db = $firestore;
+
   // Fetch inventory from Firestore
   const fetchInventory = async () => {
     if (!process.client) return;

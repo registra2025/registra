@@ -24,4 +24,6 @@ export default defineNuxtPlugin(() => {
       },
     };
   }
+  // Always return an object, even if empty, for SSR safety
+  return { provide: {} };
 });

@@ -1,15 +1,12 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
-import { getApp } from 'firebase/app';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import { useRoute } from '#app';
 
 const route = useRoute();
 
-let db;
-if (process.client) {
-  db = getFirestore(getApp());
-}
+const { $firestore } = useNuxtApp();
+const db = $firestore;
 const product = ref(null);
 const loading = ref(true);
 const error = ref(null);

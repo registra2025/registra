@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, watchEffect } from 'vue';
 import { useRoute } from 'nuxt/app';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import Sidebar from '~/components/Sidebar.vue';
 import SidebarAdmin from '~/components/SidebarAdmin.vue';
 import NavbarGuest from '~/components/NavbarGuest.vue';
@@ -17,11 +17,14 @@ const isAdmin = ref(false);
 
 onMounted(() => {
   if (process.client) {
-    const auth = getAuth();
-    onAuthStateChanged(auth, (firebaseUser) => {
-      user.value = firebaseUser;
-      isAdmin.value = firebaseUser?.email === 'admin@registra.com';
-    });
+    const nuxtApp = useNuxtApp();
+    const $auth = nuxtApp.$auth;
+    if ($auth) {
+      onAuthStateChanged($auth, (firebaseUser) => {
+        user.value = firebaseUser;
+        isAdmin.value = firebaseUser?.email === 'admin@registra.com';
+      });
+    }
   }
 });
 

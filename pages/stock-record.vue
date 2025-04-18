@@ -3,14 +3,11 @@ definePageMeta({
   middleware: 'auth-global'
 });
 import { ref, onMounted } from "vue";
-import { getFirestore, collection, getDocs, addDoc, onSnapshot } from "firebase/firestore";
-import { getApp } from "firebase/app";
+import { collection, getDocs, addDoc, onSnapshot } from "firebase/firestore";
 
-// Ensure Firebase app is initialized
-let db;
-if (process.client) {
-  db = getFirestore(getApp());
-}
+// Use Firestore from Nuxt plugin
+const { $firestore } = useNuxtApp();
+const db = $firestore;
 
 // Reactive inventory list
 const inventory = ref([]);
