@@ -1,7 +1,8 @@
 import { defineNuxtPlugin } from "#app";
-import { initializeApp, getApps } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
+import { initializeApp} from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore} from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 // Firebase config
 const firebaseConfig = {
@@ -13,22 +14,17 @@ const firebaseConfig = {
     appId: "1:472865052274:web:7ae2f2c16992060d7e14eb"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-// const db = getFirestore(app);
+export default defineNuxtPlugin(nuxtApp => {
+   // Initialize Firebase
+   const app = initializeApp(firebaseConfig);
 
-// export { db, auth };
-// 🔹 Export Firestore instance
-// export const db = getFirestore(app);
-export default defineNuxtPlugin(() => {
-    // 🔹 Ensure Firebase is initialized only once
-    const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
-  
-    // 🔹 Export Firestore instance
-    return {
-      provide: {
-        firestore: getFirestore(app),
-      },
-    };
-  });
+   // Initialize Firebase services
+   const auth = getAuth(app);
+   const firestore = getFirestore(app);
+   const storage = getStorage(app);
+
+  // Always return an object, even if empty, for SSR safety
+  nuxtApp.provide("auth", auth);
+  nuxtApp.provide("firestore", firestore);
+  nuxtApp.provide("storage", storage);
+});

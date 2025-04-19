@@ -3,26 +3,17 @@ definePageMeta({
   middleware: 'auth-global'
 });
 import { ref, onMounted } from "vue";
-import { getFirestore, collection, getDocs, addDoc, onSnapshot, query, where, getDoc, doc } from "firebase/firestore";
-import { getApp } from "firebase/app";
-import Scan from './scan.vue'; // Import the scan component
+import { collection, getDocs, addDoc, onSnapshot, query, where } from "firebase/firestore";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
+import Scan from './scan.vue';
 
-// Ensure Firebase app is initialized
-const db = getFirestore(getApp());
+const { $firestore, $firebaseApp } = useNuxtApp();
+const db = $firestore;
+const storage = getStorage($firebaseApp);
 
-// Reactive inventory list
+// Inventory list
 const inventory = ref([]);
 
-// Fetch inventory data from Firestore
-const fetchInventory = async () => {
-  const querySnapshot = await getDocs(collection(db, "inventory"));
-  inventory.value = querySnapshot.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-};
-
-// Real-time listener for Firestore changes
 onMounted(() => {
   const unsubscribe = onSnapshot(collection(db, "inventory"), (snapshot) => {
     inventory.value = snapshot.docs.map(doc => ({
@@ -34,86 +25,139 @@ onMounted(() => {
   return () => unsubscribe();
 });
 
-// New product form data
-const newProduct = ref({
+// New item form
+const newItem = ref({
   itemId: "",
   itemName: "",
   itemPrice: "",
   itemQty: "",
-})
+  imageUrl: "", // Image URL field
+});
 
-// Function to check if itemId already exists in the inventory
+// Selected image file
+const selectedImage = ref(null);
+const previewUrl = ref(null);
+
+// Image input change handler
+const handleImageChange = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    selectedImage.value = file;
+    previewUrl.value = URL.createObjectURL(file);
+  }
+};
+
+// Upload image to Firebase Storage and return its URL
+const uploadImage = async (file, itemId) => {
+  const imgRef = storageRef(storage, `item-images/${itemId}-${Date.now()}`);
+  await uploadBytes(imgRef, file);
+  return await getDownloadURL(imgRef);
+};
+
 const checkItemIdExists = async (itemId) => {
   const q = query(collection(db, "inventory"), where("itemId", "==", itemId));
   const querySnapshot = await getDocs(q);
-  return querySnapshot.empty; // returns true if itemId is unique (doesn't exist)
+  return querySnapshot.empty;
 };
 
-// Function to add a new product to Firestore
+// Add new item to Firestore with image URL
 const addNewItem = async () => {
-  if (!newProduct.value.itemName || !newProduct.value.itemPrice || !newProduct.value.itemQty) {
+  if (!newItem.value.itemName || !newItem.value.itemPrice || !newItem.value.itemQty) {
     alert("Please fill in all fields!");
     return;
   }
 
-  const itemId = Number(newProduct.value.itemId);
-  
-  // Check if itemId already exists
+  const itemId = Number(newItem.value.itemId);
   const itemIdExists = await checkItemIdExists(itemId);
   if (!itemIdExists) {
     alert("Item ID already exists. Enter another Item");
     return;
   }
 
-  // Proceed to add item if ID is unique
-  await addDoc(collection(db, "inventory"), {
-    itemId: Number(newProduct.value.itemId),
-    itemName: newProduct.value.itemName,
-    itemPrice: Number(newProduct.value.itemPrice),
-    itemQty: Number(newProduct.value.itemQty),
-  });
+  let imageUrl = "";
+  if (selectedImage.value) {
+    const imagePath = 'inventory/${Date.now()}-${selectedImage.value.name}';
+    const imgRef = storageRef(storage, imagePath);
 
-  newProduct.value = { itemId: "", itemName: "", itemPrice: "", itemQty: "" };
+    try {
+      const snapshot = await uploadBytes(imgRef, selectedImage.value);
+      imageUrl = await getDownloadURL(snapshot.ref);
+    } catch (err) {
+      console.error("Image upload error:", err);
+      alert("Failed to upload image.");
+      return;
+    }
+  }
+
+   const handleImageChange = (event) => {
+   const file = event.target.files[0];
+   if (file) {
+      selectedImage.value = file;
+      previewUrl.value = URL.createObjectURL(file); // Create a local preview
+   }
 };
 
-// Function to handle scanned barcode input
-const handleScannedBarcode = (scannedBarcode) => {
-  newProduct.value.itemId = scannedBarcode; // Set scanned barcode to itemId field
+  try {
+    await addDoc(collection(db, "inventory"), {
+      itemId,
+      itemName: newItem.value.itemName,
+      itemPrice: Number(newItem.value.itemPrice),
+      itemQty: Number(newItem.value.itemQty),
+      imageUrl: imageUrl || ""
+    });
+   newItem.value = { itemId: "", itemName: "", itemPrice: "", itemQty: "", imageUrl: "" };
+   selectedImage.value = null;
+   if (previewUrl.value) {
+      URL.revokeObjectURL(previewUrl.value);
+      previewUrl.value = null;
+   }
+   alert("Item added successfully!");
+  } catch (err) {
+    console.error("Firebase error:", err);
+    alert("Failed to add item.");
+  }
 };
 
-// Camera active state for barcode scanning
+// Barcode + camera logic...
+const handleScannedBarcode = (barcode) => { newItem.value.itemId = barcode; };
 const isCameraActive = ref(false);
-
-// Toggle Camera On/Off for Barcode Scanning
-const toggleCamera = () => {
-  isCameraActive.value = !isCameraActive.value;
-};
-
-// Stop camera after scanning
-const stopCamera = () => {
-  isCameraActive.value = false;  // Close the camera after the barcode is scanned
-};
-
-
+const toggleCamera = () => { isCameraActive.value = !isCameraActive.value; };
+const stopCamera = () => { isCameraActive.value = false; };
 </script>
 
 <template>
-  <div class="p-6 max0h-screen">
-    <h2 class="text-2xl font-bold mb-4">Inventory</h2>
+  <div class="mt-4">
+  <h3 class="text-lg font-bold">Add Item</h3>
+  <input v-model="newItem.itemId" placeholder="Item ID" class="border p-2 m-1" />
+  <input v-model="newItem.itemName" placeholder="Name" class="border p-2 m-1" />
+  <input v-model="newItem.itemPrice" placeholder="Price" class="border p-2 m-1" />
+  <input v-model="newItem.itemQty" placeholder="Quantity" class="border p-2 m-1" />
 
-    <div class="mt-4">
-      <h3 class="text-lg font-bold">Add Product</h3>
-      <input v-model="newProduct.itemId" placeholder="Item ID" class="border p-2 m-1" />
-      <input v-model="newProduct.itemName" placeholder="Name" class="border p-2 m-1" />
-      <input v-model="newProduct.itemPrice" placeholder="Price" class="border p-2 m-1" />
-      <input v-model="newProduct.itemQty" placeholder="Quantity" class="border p-2 m-1" />
-      
-      <button @click="addNewItem" class="bg-green-500 text-white p-2">Add</button>
-      <!-- Scan Button -->
-      <button @click="toggleCamera" class="bg-blue-500 text-white p-2 ml-2">Scan</button>
-    </div>
-    
-    <!-- Scan Barcode Modal (Only Show When Scan is Active) -->
-    <scan @scanBarcode="handleScannedBarcode" @stopCamera="stopCamera" v-if="isCameraActive" />
+  <!-- Image Upload Input -->
+<input
+  type="file"
+  accept="image/*"
+  capture="environment"
+  @change="handleImageChange"
+  class="border p-2 m-1"
+/>
+
+<!-- Preview the selected image -->
+<div v-if="previewUrl" class="mt-2">
+  <p class="text-sm text-gray-600 mb-1">Preview:</p>
+  <img :src="previewUrl" alt="Image Preview" class="w-32 h-32 object-cover border rounded" />
+</div>
+
+  <div v-if="selectedImage" class="mt-2">
+    <p class="text-sm text-gray-600">Selected image: {{ selectedImage.name }}</p>
   </div>
+
+  <!-- Buttons -->
+  <button @click="addNewItem" class="bg-green-500 text-white p-2">Add</button>
+  <button @click="toggleCamera" class="bg-blue-500 text-white p-2 ml-2">Scan</button>
+</div>
+
+<!-- Barcode Scanner -->
+<scan @scanBarcode="handleScannedBarcode" @stopCamera="stopCamera" v-if="isCameraActive" />
+
 </template>

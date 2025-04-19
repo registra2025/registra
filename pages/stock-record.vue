@@ -3,22 +3,27 @@ definePageMeta({
   middleware: 'auth-global'
 });
 import { ref, onMounted } from "vue";
-import { getFirestore, collection, getDocs, addDoc, onSnapshot } from "firebase/firestore";
-import { getApp } from "firebase/app";
+import { collection, getDocs, onSnapshot } from "firebase/firestore";
 
-// Ensure Firebase app is initialized
-const db = getFirestore(getApp());
+// Use Firestore from Nuxt plugin
+const { $firestore } = useNuxtApp();
+const db = $firestore;
 
 // Reactive inventory list
 const inventory = ref([]);
 
 // Fetch inventory data from Firestore
 const fetchInventory = async () => {
-  const querySnapshot = await getDocs(collection(db, "inventory"));
-  inventory.value = querySnapshot.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
+  if (!process.client) return;
+  try {
+    const querySnapshot = await getDocs(collection(db, "inventory"));
+    inventory.value = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  } catch (err) {
+    console.error('Firebase error:', err);
+  }
 };
 
 // Real-time listener for Firestore changes
@@ -47,6 +52,7 @@ onMounted(() => {
     <table class="border-collapse w-full">
       <thead>
         <tr class="bg-gray-200">
+          <th class="border p-2">Image</th> 
           <th class="border p-2">Item ID</th>
           <th class="border p-2">Name</th>
           <th class="border p-2">Price</th>
@@ -55,6 +61,15 @@ onMounted(() => {
       </thead>
       <tbody>
         <tr v-for="item in inventory" :key="item.id">
+         <td class="border p-2">
+        <img
+          v-if="item.imageUrl"
+          :src="item.imageUrl"
+          alt="Item Image"
+          class="w-16 h-16 object-cover rounded"
+        />
+        <span v-else class="text-gray-400">No image</span>
+      </td>
           <td class="border p-2">{{ item.itemId }}</td>
           <td class="border p-2">{{ item.itemName }}</td>
           <td class="border p-2">${{ item.itemPrice }}</td>

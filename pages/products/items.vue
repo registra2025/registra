@@ -1,18 +1,19 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
-import { getApp } from 'firebase/app';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import { useRoute } from '#app';
 
 const route = useRoute();
 
-const db = getFirestore(getApp());
+const { $firestore } = useNuxtApp();
+const db = $firestore;
 const product = ref(null);
 const loading = ref(true);
 const error = ref(null);
 
 // Function to fetch product details by barcode/itemId
 const fetchProduct = async (barcode) => {
+  if (!process.client) return;
   try {
     loading.value = true;
     error.value = null;
@@ -30,7 +31,7 @@ const fetchProduct = async (barcode) => {
       };
     }
   } catch (err) {
-    console.error('Error fetching product:', err);
+    console.error('Firebase error:', err);
     error.value = 'Error fetching product details';
   } finally {
     loading.value = false;
