@@ -38,12 +38,12 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
   // If not logged in and not on a public route, redirect to login
   if (!user && !publicRoutes.includes(to.path)) {
-    return navigateTo("/login");
+    return navigateTo("/");
   }
 
   // If logged in but not admin and trying to access admin route
   if (user && user.email !== adminEmail && adminRoutes.includes(to.path)) {
-    return navigateTo("/403");
+    return navigateTo("/403"); 
   }
 
   // Otherwise, allow navigation

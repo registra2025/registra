@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, watchEffect } from 'vue';
 import { useRoute } from 'nuxt/app';
-import { onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import Sidebar from '~/components/Sidebar.vue';
 import SidebarAdmin from '~/components/SidebarAdmin.vue';
 import NavbarGuest from '~/components/NavbarGuest.vue';
@@ -16,16 +16,13 @@ const user = ref(null);
 const isAdmin = ref(false);
 
 onMounted(() => {
-  if (process.client) {
-    const nuxtApp = useNuxtApp();
-    const $auth = nuxtApp.$auth;
-    if ($auth) {
-      onAuthStateChanged($auth, (firebaseUser) => {
-        user.value = firebaseUser;
-        isAdmin.value = firebaseUser?.email === 'admin@registra.com';
-      });
-    }
-  }
+
+    const auth = getAuth();
+    onAuthStateChanged(auth, (firebaseUser) => {
+      user.value = firebaseUser;
+      isAdmin.value = firebaseUser?.email === 'admin@registra.com';
+    });
+
 });
 
 // Page title logic
@@ -53,19 +50,26 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div class="flex max-h-screen">
-    <!-- Conditional Sidebar -->
-    <component :is="isAdmin ? SidebarAdmin : Sidebar" :isSidebarOpen="isSidebarOpen" @toggleSidebar="toggleSidebar" />
-
-    <!-- Main Content -->
-    <div class="flex flex-col flex-grow bg-white dark:bg-darkBg text-black dark:text-darkText transition-colors duration-200 overflow-y-auto">
-      <NavbarGuest v-if="!user" @toggleSidebar="toggleSidebar" />
-      <NavbarUser v-else :title="pageTitle" @toggleSidebar="toggleSidebar" />
-
-     
-      <main class="flex-grow overflow-y-auto px-8 py-4 mt-[95px] m-1 mb-1 mr-1 rounded-[15px] bg-white dark:bg-darkBg shadow-md">
-        <slot />
-      </main>
-    </div>
-  </div>
-</template>
+   <div class="flex h-screen overflow-hidden">
+     <!-- Conditional Sidebar -->
+     <component
+       :is="isAdmin ? SidebarAdmin : Sidebar"
+       :isSidebarOpen="isSidebarOpen"
+       @toggleSidebar="toggleSidebar"
+       class="overflow-y-auto"
+     />
+ 
+     <!-- Main Content -->
+     <div class="flex flex-col flex-1 overflow-hidden">
+       <!-- Navbar -->
+       <NavbarGuest v-if="!user" @toggleSidebar="toggleSidebar" />
+       <NavbarUser v-else :title="pageTitle" @toggleSidebar="toggleSidebar" />
+ 
+       <!-- Main slot -->
+       <main class="flex-1 overflow-y-auto px-4 py-4 mt-[95px] m-1 rounded-[15px] bg-white dark:bg-darkBg shadow-md">
+         <slot />
+       </main>
+     </div>
+   </div>
+ </template>
+ 

@@ -2,30 +2,30 @@
     <aside
       v-show="isSidebarOpen"
       class="sidebar w-[fit] bg-[#1c4375] px-6 py-4 transition-all duration-300 flex-shrink-0 h-[calc(100vh-0.5rem)] flex flex-col pt-[90px] rounded-[15px] m-1 shadow-lg">
-    <div class="flex justify-center pb-4">
+      <div class="flex flex-col items-center ">
       <NuxtLink :to="user ? '/dashboard' : '/'">
         <img
           src="/reg_logo_rm.png"
           alt="Logo"
-          class="w-[200px] h-[200px] object-contain max-w-full max-h-full md:w-[300px] md:h-[200px] sm:w-[120px] sm:h-[120px]"
+          class="w-[200px] h-[200px] object-contain max-w-full max-h-full md:w-[270px] md:h-[200px] sm:w-[120px] sm:h-[120px]"
         />
       </NuxtLink>
-    </div>
   
-      <div class="flex-grow flex flex-col gap-2 overflow-y-auto">
+      <div class="flex flex-col gap-2 w-full overflow-y-auto">
         <template v-if="user">
-         <NuxtLink to="/dashboard" class="w-[307px] min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-normal">DASHBOARD</NuxtLink>
-         <NuxtLink to="/cart" class="w-[307px] min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-[25px] font-normal">CART</NuxtLink>
+         <NuxtLink to="/dashboard" class="min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-normal">DASHBOARD</NuxtLink>
+         <NuxtLink to="/cart" class="min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-[25px] font-normal">CART</NuxtLink>
          <!-- <NuxtLink to="/sales-receipt" class="w-[307px] min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-[25px] font-normal">SALES RECEIPT</NuxtLink> -->
-         <NuxtLink to="/purchase-receipt" class="w-[307px] min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-[25px] font-normal">PURCHASE RECEIPT</NuxtLink>
+         <NuxtLink to="/purchase-receipt" class=" min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-[25px] font-normal">PURCHASE RECEIPT</NuxtLink>
         </template>
   
         <template v-else>
-          <NuxtLink to="/about" class="w-[307px] h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-normal">ABOUT US</NuxtLink>
-          <NuxtLink to="/contact" class="w-[307px] h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-normal">CONTACT US</NuxtLink>
-          <NuxtLink to="/faq" class="w-[307px] h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-normal">FAQ</NuxtLink>
-          <NuxtLink to="/pricing" class="w-[307px] h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black  pl-4 text-[25px] font-normal">PRICING</NuxtLink>
+          <NuxtLink to="/about" class="h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-normal">ABOUT US</NuxtLink>
+          <NuxtLink to="/contact" class="h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-normal">CONTACT US</NuxtLink>
+          <NuxtLink to="/faq" class="h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-normal">FAQ</NuxtLink>
+          <NuxtLink to="/pricing" class="h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black  pl-4 text-[25px] font-normal">PRICING</NuxtLink>
         </template>
+      </div>
       </div>
     </aside>
   </template>
