@@ -1,11 +1,7 @@
 <template>
-   <aside
-     v-show="isSidebarOpen"
-     class="sidebar w-fit bg-[#1c4375] px-6 py-4 transition-all duration-300 flex-shrink-0 h-[calc(100vh-0.5rem)] flex flex-col pt-[90px] rounded-[15px] m-1 shadow-lg"
-   >
-     <!-- Wrapper for Logo + Links -->
-     <div class="flex flex-col items-center ">
-       <!-- Logo -->
+   <aside v-show="isSidebarOpen" class="w-full h-full">
+    <!-- Sidebar Content Wrapper (scrollable) -->
+    <div class="flex flex-col items-center px-6 py-4 h-fit">
        <NuxtLink to="/dashboard-admin" class="flex justify-center">
          <img
            src="/reg_logo_rm.png"
@@ -15,7 +11,7 @@
        </NuxtLink>
  
        <!-- Navigation Links -->
-       <div class="flex flex-col gap-2 w-full overflow-y-auto">
+       <div class="flex flex-col gap-2 w-full overflow-y-auto mt-2">
          <NuxtLink
            to="/dashboard-admin"
            class="min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-normal"

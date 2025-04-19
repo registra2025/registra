@@ -6,7 +6,7 @@
       >
       <span class="material-symbols-outlined">menu</span>
       </button>
-      <h1 class="text-[#2966b1] text-[32px] text-light ml-4">REGISTRA</h1>
+      <h1 class="text-[#2966b1] text-xl sm:text-2xl md:text-3xl text-light ml-4">REGISTRA</h1>
           <!-- Dark Mode Toggle -->
     <div class="flex items-center ml-4">
       <input
@@ -30,7 +30,7 @@
       </label>
     </div>
       <div class="ml-auto">
-        <NuxtLink to="/login" class="text-black text-[32px] hover:text-[#2966b1]">
+        <NuxtLink to="/login" class="text-black text-xl sm:text-2xl md:text-3xl hover:text-[#2966b1]">
           LOGIN
         </NuxtLink>
       </div>

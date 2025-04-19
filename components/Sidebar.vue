@@ -1,8 +1,8 @@
 <template>
-    <aside
-      v-show="isSidebarOpen"
-      class="sidebar w-[fit] bg-[#1c4375] px-6 py-4 transition-all duration-300 flex-shrink-0 h-[calc(100vh-0.5rem)] flex flex-col pt-[90px] rounded-[15px] m-1 shadow-lg">
-      <div class="flex flex-col items-center ">
+    <aside v-show="isSidebarOpen" class="w-full h-full">
+    <!-- Sidebar Content Wrapper (scrollable) -->
+    <div class="flex flex-col items-center px-6 py-4 h-fit">
+      <!-- Logo -->
       <NuxtLink :to="user ? '/dashboard' : '/'">
         <img
           src="/reg_logo_rm.png"
