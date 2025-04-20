@@ -126,38 +126,41 @@ const stopCamera = () => { isCameraActive.value = false; };
 </script>
 
 <template>
-  <div class="mt-4">
-  <h3 class="text-lg font-bold">Add Item</h3>
-  <input v-model="newItem.itemId" placeholder="Item ID" class="border p-2 m-1" />
-  <input v-model="newItem.itemName" placeholder="Name" class="border p-2 m-1" />
-  <input v-model="newItem.itemPrice" placeholder="Price" class="border p-2 m-1" />
-  <input v-model="newItem.itemQty" placeholder="Quantity" class="border p-2 m-1" />
-
-  <!-- Image Upload Input -->
-<input
-  type="file"
-  accept="image/*"
-  capture="environment"
-  @change="handleImageChange"
-  class="border p-2 m-1"
-/>
-
-<!-- Preview the selected image -->
-<div v-if="previewUrl" class="mt-2">
-  <p class="text-sm text-gray-600 mb-1">Preview:</p>
-  <img :src="previewUrl" alt="Image Preview" class="w-32 h-32 object-cover border rounded" />
-</div>
-
-  <div v-if="selectedImage" class="mt-2">
-    <p class="text-sm text-gray-600">Selected image: {{ selectedImage.name }}</p>
+  <div class="min-h-[80vh] flex items-center justify-center">
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center">
+      <h3 class="text-2xl font-extrabold text-[#1c4375] mb-6">Add Item</h3>
+      <div class="w-full flex flex-col gap-4">
+        <input v-model="newItem.itemId" placeholder="Item ID" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-blue-50 focus:outline-none transition" />
+        <input v-model="newItem.itemName" placeholder="Name" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-blue-50 focus:outline-none transition" />
+        <input v-model="newItem.itemPrice" placeholder="Price" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-blue-50 focus:outline-none transition" />
+        <input v-model="newItem.itemQty" placeholder="Quantity" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-blue-50 focus:outline-none transition" />
+        <!-- Image Upload Input -->
+        <label class="block w-full">
+          <span class="text-gray-600 text-sm font-semibold mb-1">Upload Image</span>
+          <input
+            type="file"
+            accept="image/*"
+            capture="environment"
+            @change="handleImageChange"
+            class="w-full p-2 rounded-lg border border-gray-300 bg-blue-50 text-black focus:outline-none mt-1"
+          />
+        </label>
+        <!-- Preview the selected image -->
+        <div v-if="previewUrl" class="flex flex-col items-center mt-2">
+          <p class="text-xs text-gray-600 mb-1">Preview:</p>
+          <img :src="previewUrl" alt="Image Preview" class="w-32 h-32 object-cover border rounded-lg shadow" />
+        </div>
+        <div v-if="selectedImage" class="mt-2 text-center">
+          <p class="text-xs text-gray-600">Selected image: {{ selectedImage.name }}</p>
+        </div>
+      </div>
+      <!-- Buttons -->
+      <div class="flex gap-4 mt-6 w-full">
+        <button @click="addNewItem" class="flex-1 bg-[#1c4375] hover:bg-[#2966b1] text-white font-semibold p-3 rounded-lg shadow transition">Add Item</button>
+        <button @click="toggleCamera" class="flex-1 bg-blue-500 hover:bg-blue-700 text-white font-semibold p-3 rounded-lg shadow transition">Scan</button>
+      </div>
+      <!-- Barcode Scanner -->
+      <scan @scanBarcode="handleScannedBarcode" @stopCamera="stopCamera" v-if="isCameraActive" />
+    </div>
   </div>
-
-  <!-- Buttons -->
-  <button @click="addNewItem" class="bg-green-500 text-white p-2">Add</button>
-  <button @click="toggleCamera" class="bg-blue-500 text-white p-2 ml-2">Scan</button>
-</div>
-
-<!-- Barcode Scanner -->
-<scan @scanBarcode="handleScannedBarcode" @stopCamera="stopCamera" v-if="isCameraActive" />
-
 </template>

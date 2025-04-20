@@ -53,11 +53,11 @@ const googleSignIn = async () => {
       
       <label class="block text-gray-700">User ID</label>
       <input v-model="email" type="text" placeholder="Enter your email"
-        class="w-full p-3 mt-1 rounded-md border border-gray-300 bg-blue-100 focus:outline-none focus:border-blue-500">
+        class="w-full p-3 mt-1 rounded-md border text-black border-gray-300 bg-blue-100 focus:outline-none focus:border-blue-500">
 
       <label class="block text-gray-700 mt-4">Password</label>
       <input v-model="password" type="password" placeholder="Enter your password"
-        class="w-full p-3 mt-1 rounded-md border border-gray-300 bg-blue-100 focus:outline-none focus:border-blue-500">
+        class="w-full p-3 mt-1 rounded-md border text-black border-gray-300 bg-blue-100 focus:outline-none focus:border-blue-500">
       
       <!-- Buttons -->
       <button @click="login" class="w-full bg-blue-600 text-white p-3 mt-4 rounded-md hover:opacity-80">LOGIN</button>

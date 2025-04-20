@@ -60,7 +60,7 @@ watchEffect(() => {
      <!-- Sidebar + Main Content -->
      <div class="flex pt-[74px] h-[100vh]">
        <!-- Sidebar (hidden on mobile) -->
-       <div class=" bg-[#1c4375] flex-shrink-0 m-2 transition-all duration-300 pt-[15px] rounded-[15px] shadow-lg overflow-y-auto">
+       <div class=" bg-[#1c4375] flex-shrink-0 m-2 transition-all duration-300 rounded-[15px] shadow-lg overflow-y-auto">
          <component
            :is="isAdmin ? SidebarAdmin : Sidebar"
            :isSidebarOpen="isSidebarOpen"
@@ -69,7 +69,7 @@ watchEffect(() => {
        </div>
  
        <!-- Main Content -->
-       <main class="flex-1 overflow-y-auto p-4 m-2 rounded-[15px] bg-white dark:bg-darkBg shadow-md">
+       <main class="flex-1 overflow-y-auto p-4 m-2 -ml-0.5 rounded-[15px] bg-white dark:bg-darkBg shadow-md">
          <slot />
        </main>
      </div>
