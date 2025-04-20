@@ -59,6 +59,7 @@ onMounted(() => {
           <th class="p-3 font-semibold text-left">Name</th>
           <th class="p-3 font-semibold text-left">Price</th>
           <th class="p-3 font-semibold text-left">Quantity</th>
+          <th class="p-3 font-semibold text-left">Description</th>
         </tr>
 
       </thead>
@@ -83,6 +84,7 @@ onMounted(() => {
           <td class="p-2 font-semibold">{{ item.itemName }}</td>
           <td class="p-2 text-green-700 font-bold">${{ item.itemPrice }}</td>
           <td class="p-2 text-blue-700 font-bold">{{ item.itemQty }}</td>
+          <td class="p-2 font-semibold">{{ item.itemDesc }}</td>
         </tr>
 
       </tbody>
@@ -109,6 +111,7 @@ onMounted(() => {
         <div class="font-bold text-base text-[#1c4375]">{{ item.itemName }}</div>
         <div class="text-green-700 font-bold text-sm">${{ item.itemPrice }}</div>
         <div class="text-blue-700 font-bold text-sm">Qty: {{ item.itemQty }}</div>
+        <div class="text-blue-700 font-bold text-sm">Qty: {{ item.itemDesc }}</div>
       </div>
     </NuxtLink>
   </div>

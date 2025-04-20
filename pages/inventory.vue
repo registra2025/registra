@@ -31,6 +31,7 @@ const newItem = ref({
   itemName: "",
   itemPrice: "",
   itemQty: "",
+  itemDesc: "",
   imageUrl: "", // Image URL field
 });
 
@@ -62,7 +63,7 @@ const checkItemIdExists = async (itemId) => {
 
 // Add new item to Firestore with image URL
 const addNewItem = async () => {
-  if (!newItem.value.itemName || !newItem.value.itemPrice || !newItem.value.itemQty) {
+  if (!newItem.value.itemName || !newItem.value.itemPrice || !newItem.value.itemQty || !newItem.value.itemDesc) {
     alert("Please fill in all fields!");
     return;
   }
@@ -103,9 +104,10 @@ const addNewItem = async () => {
       itemName: newItem.value.itemName,
       itemPrice: Number(newItem.value.itemPrice),
       itemQty: Number(newItem.value.itemQty),
+      itemDesc: newItem.value.itemDesc,
       imageUrl: imageUrl || ""
     });
-   newItem.value = { itemId: "", itemName: "", itemPrice: "", itemQty: "", imageUrl: "" };
+   newItem.value = { itemId: "", itemName: "", itemPrice: "", itemQty: "", itemDesc:"", imageUrl: "" };
    selectedImage.value = null;
    if (previewUrl.value) {
       URL.revokeObjectURL(previewUrl.value);
@@ -134,6 +136,7 @@ const stopCamera = () => { isCameraActive.value = false; };
         <input v-model="newItem.itemName" placeholder="Name" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-blue-50 focus:outline-none transition" />
         <input v-model="newItem.itemPrice" placeholder="Price" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-blue-50 focus:outline-none transition" />
         <input v-model="newItem.itemQty" placeholder="Quantity" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-blue-50 focus:outline-none transition" />
+        <input v-model="newItem.itemDesc" placeholder="Description" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-blue-50 focus:outline-none transition" />
         <!-- Image Upload Input -->
         <label class="block w-full">
           <span class="text-gray-600 text-sm font-semibold mb-1">Upload Image</span>

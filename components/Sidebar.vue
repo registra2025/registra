@@ -13,17 +13,17 @@
   
       <div class="flex flex-col gap-2 w-full overflow-y-auto">
         <template v-if="user">
-         <NuxtLink to="/dashboard" class="min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-normal">DASHBOARD</NuxtLink>
-         <NuxtLink to="/cart" class="min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-[25px] font-normal">CART</NuxtLink>
+         <NuxtLink to="/dashboard" class="min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-xl sm:text-2xl md:text-2xl font-normal">DASHBOARD</NuxtLink>
+         <NuxtLink to="/cart" class="min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-xl sm:text-2xl md:text-2xl font-normal">CART</NuxtLink>
          <!-- <NuxtLink to="/sales-receipt" class="w-[307px] min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-[25px] font-normal">SALES RECEIPT</NuxtLink> -->
-         <NuxtLink to="/purchase-receipt" class=" min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-[25px] font-normal">PURCHASE RECEIPT</NuxtLink>
+         <NuxtLink to="/purchase-receipt" class=" min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-xl sm:text-2xl md:text-2xl font-normal">PURCHASE RECEIPTS</NuxtLink>
         </template>
   
         <template v-else>
-          <NuxtLink to="/about" class="h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-normal">ABOUT US</NuxtLink>
-          <NuxtLink to="/contact" class="h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-normal">CONTACT US</NuxtLink>
-          <NuxtLink to="/faq" class="h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-[25px] font-normal">FAQ</NuxtLink>
-          <NuxtLink to="/pricing" class="h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black  pl-4 text-[25px] font-normal">PRICING</NuxtLink>
+          <NuxtLink to="/about" class="h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-xl sm:text-2xl md:text-2xl font-normal">ABOUT US</NuxtLink>
+          <NuxtLink to="/contact" class="h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-xl sm:text-2xl md:text-2xl font-normal">CONTACT US</NuxtLink>
+          <NuxtLink to="/faq" class="h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-xl sm:text-2xl md:text-2xl font-normal">FAQ</NuxtLink>
+          <NuxtLink to="/pricing" class="h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black  pl-4 text-xl sm:text-2xl md:text-2xl font-normal">PRICING</NuxtLink>
         </template>
       </div>
       </div>

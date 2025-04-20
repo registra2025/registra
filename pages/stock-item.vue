@@ -60,7 +60,7 @@ onMounted(async () => {
         <div class="text-gray-700 mb-2">ID: <span class="font-mono">{{ item.itemId }}</span></div>
         <div class="text-green-700 font-bold text-lg mb-2">${{ item.itemPrice }}</div>
         <div class="text-blue-700 font-bold text-lg mb-4">Quantity: {{ item.itemQty }}</div>
-        <div class="text-gray-600 text-base mb-2" v-if="item.description">{{ item.description }}</div>
+        <div class="text-gray-600 text-base mb-2" v-if="item.itemDesc">{{ item.itemDesc }}</div>
         <div class="text-gray-400 text-sm italic" v-else>No description available.</div>
       </div>
     </div>

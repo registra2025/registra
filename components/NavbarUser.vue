@@ -8,7 +8,7 @@
       </button>
       <h1 class="text-[#2966b1] text-xl sm:text-2xl md:text-3xl ml-4">{{ title }}</h1>
       <!-- Dark Mode Toggle -->
-      <!-- <div class="flex items-center ml-4">
+      <!-- <div class="flex items-center ml-4"> 
         <input
           type="checkbox"
           id="dark-toggle"

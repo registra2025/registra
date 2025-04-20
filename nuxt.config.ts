@@ -2,14 +2,11 @@
 import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
    //  ssr: true,
-    modules: ['@pinia/nuxt','@nuxt/ui'],
+    modules: ['@pinia/nuxt'],
     compatibilityDate: '2024-11-01',
     devtools: { enabled: true },
     // pages: false,
     css: ['@/assets/css/main.css'],
-    ui: {
-      fonts: false
-    },
     vite: {
         plugins: [
             tailwindcss(),
