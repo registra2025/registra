@@ -16,7 +16,7 @@
          <NuxtLink to="/dashboard" class="min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-xl sm:text-2xl md:text-2xl font-normal">DASHBOARD</NuxtLink>
          <NuxtLink to="/cart" class="min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-xl sm:text-2xl md:text-2xl font-normal">CART</NuxtLink>
          <!-- <NuxtLink to="/sales-receipt" class="w-[307px] min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-[25px] font-normal">SALES RECEIPT</NuxtLink> -->
-         <NuxtLink to="/purchase-receipt" class=" min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-xl sm:text-2xl md:text-2xl font-normal">PURCHASE RECEIPTS</NuxtLink>
+         <NuxtLink to="/my-receipts" class=" min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-xl sm:text-2xl md:text-2xl font-normal">MY RECEIPTS</NuxtLink>
         </template>
   
         <template v-else>

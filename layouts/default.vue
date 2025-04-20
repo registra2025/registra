@@ -39,6 +39,8 @@ const pageTitles = {
   "/transactions": "TRANSACTIONS",
   "/sales-receipt": "SALES RECEIPT",
   "/purchase-receipt": "PURCHASE RECEIPT",
+  "/pr-receipt": "RECEIPT",
+  "/my-receipts": "MY RECEIPT",
   "/purchase": "PURCHASE",
   "/sales": "SALES",
   "/scan": "SCAN",

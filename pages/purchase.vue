@@ -25,7 +25,7 @@
          <div>
             <label class="block mb-1">Invoice #</label>
             <!-- Invoice -->
-            <input v-model="invoice" type="text" class="w-full border px-3 py-2 rounded bg-white dark:bg-gray-800" placeholder="INV-0001" />
+            <input v-model="invoice" type="text" class="w-full border px-3 py-2 rounded bg-white dark:bg-gray-800" :placeholder="invoice" />
          </div>
       </div>
       
@@ -104,15 +104,17 @@
       
       <!-- Submit Button -->
       <div class="mt-6 flex justify-end">
-         <NuxtLink
+        <!-- <button @click="completePurchase" class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700">
+         Complete Purchase
+        </button> -->
+        <NuxtLink
          to="/purchase-receipt"
          @click="completePurchase"
          class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700"
          >
          Complete Purchase
       </NuxtLink>
-      
-   </div>
+      </div>
    
    <!-- Scan Component -->
    <scan v-if="isCameraActive" @scanBarcode="handleScannedBarcode" />
@@ -120,11 +122,14 @@
 </template>
 
 <script setup>
+
 import { ref, computed, onUnmounted, onMounted } from 'vue'
 import { collection, query, where, getDocs } from 'firebase/firestore'
 import { usePurchaseStore } from '~/stores/purchaseStore'
+import { useRouter } from 'vue-router'
 import scan from './scan.vue'
 
+const router = useRouter()
 const purchaseStore = usePurchaseStore()
 const { $firestore } = useNuxtApp();
 const db = $firestore;
@@ -132,9 +137,7 @@ const formattedDateTime = ref('')
 const scannedCode = ref('')
 const isCameraActive = ref(false)
 const customer = ref('Walk-in')
-const invoice = ref('INV-0001')
 const payment = ref('Cash')
-
 
 let interval
 
@@ -191,18 +194,82 @@ const handleScannedBarcode = async (barcode) => {
       alert('Item not found in inventory');
     }
   } catch (err) {
-    console.error('Firebase error:', err);
+    console.error('Firebase error:', err); 
   }
 };
 
+function generateInvoiceNumber() {
+  const now = new Date()
+  return `INV-${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}-${now.getTime()}`
+}
+
+const invoice = ref('')
+
+onMounted(() => {
+  invoice.value = generateInvoiceNumber()
+})
+
 // Call this when completing the sale
-function completePurchase() {
-   purchaseStore.setPurchaseData({
-      invoice: invoice.value,
-      customer: customer.value,
-      date: formattedDateTime.value,
-      payment: payment.value,
-      products: products.value
-   })
+import { doc, setDoc } from 'firebase/firestore'
+import { useNuxtApp } from '#app'
+
+// Save receipt to Firestore under users/{userId}/receipts/{receiptId}
+async function saveReceiptToFirestore({ items, total, invoiceNumber, customer, date, payment }) {
+  const { $auth, $firestore } = useNuxtApp()
+  const user = $auth.currentUser
+  if (!user) throw new Error('User not authenticated')
+  const userId = user.uid
+  const timestamp = Date.now()
+  const receiptId = `receipt-${timestamp}`
+  const receiptData = {
+    invoiceNumber,
+    items,
+    total,
+    customer,
+    date,
+    payment,
+    timestamp,
+  }
+  await setDoc(doc($firestore, 'users', userId, 'receipts', receiptId), receiptData)
+  console.log('Receipt saved!')
+}
+
+async function completePurchase() {
+  const invoiceId = generateInvoiceNumber()
+  const items = products.value.map(item => ({
+    itemId: item.id,
+    itemName: item.name,
+    quantity: item.qty,
+    price: item.price
+  }))
+  const totalAmount = total.value
+  const customerName = customer.value
+  const dateValue = formattedDateTime.value
+  const paymentMethod = payment.value
+
+  try {
+    await saveReceiptToFirestore({
+      items,
+      total: totalAmount,
+      invoiceNumber: invoiceId,
+      customer: customerName,
+      date: dateValue,
+      payment: paymentMethod
+    })
+    // Update the store for the receipt page
+    purchaseStore.setPurchaseData({
+      invoice: invoiceId,
+      customer: customerName,
+      date: dateValue,
+      payment: paymentMethod,
+      products: items,
+      total: totalAmount,
+      createdAt: new Date()
+    })
+    router.push('/purchase-receipt')
+  } catch (err) {
+    console.error('Failed to save receipt:', err)
+    alert('Failed to save receipt.')
+  }
 }
 </script>
