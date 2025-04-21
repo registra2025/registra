@@ -1,9 +1,9 @@
 <template>
    <div class="receipt bg-white text-black p-4 mx-auto my-4 transition-all" 
-        style="width: 210mm; height: auto; font-family: sans-serif; max-height: 1500px;">
+        style="width: 210mm; height: auto; font-family: sans-serif; min-height:400px; max-height: 1500px;">
      <!-- Logo -->
      <div class="text-center mb-4">
-       <img src="/reg_logo_rm.png" alt="Register Logo" class="mx-auto mb-2" style="max-height: 50px;" />
+       <img src="/reg_logo_rm1.jpg" alt="Register Logo" class="mx-auto mb-2" style="max-height: 50px;" />
      </div>
  
      <!-- Invoice Info -->
@@ -28,9 +28,9 @@
          <tr v-for="(item, i) in products" :key="i" class="border-b">
            <td class="py-1">{{ item.itemId || item.id }}</td>
            <td class="pb-1 italic text-gray-600">{{ item.itemName || item.name }}</td>
-           <td>₦{{ (item.price || 0).toFixed(2) }}</td>
+           <td>BD {{ (item.price || 0).toFixed(2) }}</td>
            <td>{{ item.quantity ?? item.qty }}</td>
-           <td>₦{{ ((item.quantity ?? item.qty) * (item.price || 0)).toFixed(2) }}</td>
+           <td>BD {{ ((item.quantity ?? item.qty) * (item.price || 0)).toFixed(2) }}</td>
          </tr>
        </tbody>
      </table>
@@ -38,7 +38,7 @@
      <!-- Summary -->
      <div class="text-sm mt-4">
        <p><strong>Payment Method:</strong> {{ paymentMethod }}</p>
-       <p><strong>Total:</strong> ₦{{ total.toFixed(2) }}</p>
+       <p><strong>Total:</strong> BD {{ total.toFixed(2) }}</p>
      </div>
  
      <!-- Download Button -->
@@ -86,13 +86,13 @@ const downloadReceipt = async () => {
   doc.text("Customer: " + props.customer, 10, 20)
   doc.text("Date: " + props.formattedDate, 10, 30)
   doc.text("Payment Method: " + props.paymentMethod, 10, 40)
-  doc.text("Total: ₦" + props.total.toFixed(2), 10, 50)
+  doc.text("Total: BD " + props.total.toFixed(2), 10, 50)
 
   // Adding the product list to the PDF
   doc.text("Items:", 10, 60)
   props.products.forEach((item, index) => {
     const yPos = 70 + (index * 10) // Calculating Y position for each item
-    doc.text(`${item.itemName} (x${item.quantity || item.qty}) - ₦${(item.price * (item.quantity || item.qty)).toFixed(2)}`, 10, yPos)
+    doc.text(`${item.itemName} (x${item.quantity || item.qty}) - BD ${(item.price * (item.quantity || item.qty)).toFixed(2)}`, 10, yPos)
   })
   
   // Saving the PDF file

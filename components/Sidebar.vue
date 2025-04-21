@@ -3,7 +3,7 @@
     <!-- Sidebar Content Wrapper (scrollable) -->
     <div class="flex flex-col items-center px-6 py-4 h-fit">
       <!-- Logo -->
-      <NuxtLink :to="user ? '/dashboard' : '/'">
+      <NuxtLink to="/">
         <img
           src="/reg_logo_rm.png"
           alt="Logo"
@@ -11,40 +11,22 @@
         />
       </NuxtLink>
   
+      <!-- Guest Links -->
       <div class="flex flex-col gap-2 w-full overflow-y-auto">
-        <template v-if="user">
-         <NuxtLink to="/dashboard" class="min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-xl sm:text-2xl md:text-2xl font-normal">DASHBOARD</NuxtLink>
-         <NuxtLink to="/cart" class="min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-xl sm:text-2xl md:text-2xl font-normal">CART</NuxtLink>
-         <!-- <NuxtLink to="/sales-receipt" class="w-[307px] min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-[25px] font-normal">SALES RECEIPT</NuxtLink> -->
-         <NuxtLink to="/my-receipts" class=" min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-xl sm:text-2xl md:text-2xl font-normal">MY RECEIPTS</NuxtLink>
-        </template>
-  
-        <template v-else>
-          <NuxtLink to="/about" class="h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-xl sm:text-2xl md:text-2xl font-normal">ABOUT US</NuxtLink>
-          <NuxtLink to="/contact" class="h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-xl sm:text-2xl md:text-2xl font-normal">CONTACT US</NuxtLink>
-          <NuxtLink to="/faq" class="h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-xl sm:text-2xl md:text-2xl font-normal">FAQ</NuxtLink>
-          <NuxtLink to="/pricing" class="h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black  pl-4 text-xl sm:text-2xl md:text-2xl font-normal">PRICING</NuxtLink>
-        </template>
+        <NuxtLink to="/about" class="h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-xl sm:text-2xl font-normal">ABOUT US</NuxtLink>
+        <NuxtLink to="/contact" class="h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-xl sm:text-2xl font-normal">CONTACT US</NuxtLink>
+        <NuxtLink to="/faq" class="h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-xl sm:text-2xl font-normal">FAQ</NuxtLink>
+        <NuxtLink to="/pricing" class="h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-xl sm:text-2xl font-normal">PRICING</NuxtLink>
       </div>
       </div>
     </aside>
   </template>
   
   <script setup>
-  import { ref, onMounted } from "vue";
-  import { onAuthStateChanged } from "firebase/auth";
   
   defineProps(["isSidebarOpen"]);
   
-  const user = ref(null);
   
-  onMounted(() => {
-  if (process.client) {
-    const { $auth } = useNuxtApp();
-    onAuthStateChanged($auth, (firebaseUser) => {
-      user.value = firebaseUser;
-    });
-  }
-});
+  
   </script>
   

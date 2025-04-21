@@ -19,12 +19,6 @@
            DASHBOARD
          </NuxtLink>
          <NuxtLink
-           to="/cart"
-           class="min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-xl sm:text-2xl md:text-2xl font-normal"
-         >
-           CART
-         </NuxtLink>
-         <NuxtLink
            to="/inventory"
            class="min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-xl sm:text-2xl md:text-2xl font-normal"
          >
@@ -52,7 +46,7 @@
            to="/purchase-receipt"
            class="min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-xl sm:text-2xl md:text-2xl font-normal"
          >
-           PURCHASE RECEIPTS
+           CUSTOMER RECEIPTS
          </NuxtLink>
        </div>
      </div>

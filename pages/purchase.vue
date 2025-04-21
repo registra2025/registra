@@ -4,29 +4,28 @@
       <div class="flex justify-between items-center mb-6">
          <h1 class="text-2xl font-bold">New Purchase</h1>
          <NuxtLink
-         to="/dashboard" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Go Back</NuxtLink>
+         to="/dashboard" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Go Back
+      </NuxtLink>
       </div>
       
       <!-- Customer & Invoice Info -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"> 
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
          <div>
-            <label class="block mb-1">Customer</label>
-            <select v-model="customer" class="w-full border px-3 py-2 rounded bg-white dark:bg-gray-800">
-               <option>Select Customer</option>
-               <option>Walk-in</option>
-               <option>John Doe</option>
-            </select>
-         </div>
-         <div>
-            <label class="block mb-1">Date & Time</label>
+            <label class="block mb-1">Customer Name</label>
             <div class="w-full border px-3 py-2 rounded bg-white dark:bg-gray-800">
-               {{ formattedDateTime }}
+               {{ customer }}
             </div>
          </div>
          <div>
             <label class="block mb-1">Invoice #</label>
             <!-- Invoice -->
             <input v-model="invoice" type="text" class="w-full border px-3 py-2 rounded bg-white dark:bg-gray-800" :placeholder="invoice" />
+         </div>
+         <div>
+            <label class="block mb-1">Date & Time</label>
+            <div class="w-full border px-3 py-2 rounded bg-white dark:bg-gray-800">
+               {{ formattedDateTime }}
+            </div>
          </div>
       </div>
       
@@ -105,15 +104,12 @@
       
       <!-- Submit Button -->
       <div class="mt-6 flex justify-end">
-        <!-- <button @click="completePurchase" class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700">
-         Complete Purchase
-        </button> -->
         <NuxtLink
          to="/purchase-receipt"
          @click="completePurchase"
          class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700"
          >
-         Complete Purchase
+         Proceed to Counter
       </NuxtLink>
       </div>
    
@@ -137,8 +133,24 @@ const db = $firestore;
 const formattedDateTime = ref('')
 const scannedCode = ref('')
 const isCameraActive = ref(false)
-const customer = ref('Walk-in')
 const payment = ref('Cash')
+
+const customer = ref('Walk-in')
+
+// Set customer name from email
+onMounted(() => {
+  updateDateTime()
+  interval = setInterval(updateDateTime, 1000)
+
+  const { $auth } = useNuxtApp()
+  const email = $auth?.currentUser?.email
+  if (email) {
+    const nameFromEmail = email.split('@')[0]
+    customer.value = nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1)
+  }
+
+  invoice.value = generateInvoiceNumber()
+})
 
 let interval
 
@@ -205,10 +217,6 @@ function generateInvoiceNumber() {
 }
 
 const invoice = ref('')
-
-onMounted(() => {
-  invoice.value = generateInvoiceNumber()
-})
 
 // Call this when completing the sale
 import { doc, setDoc } from 'firebase/firestore'
