@@ -3,7 +3,8 @@
       <!-- Header -->
       <div class="flex justify-between items-center mb-6">
          <h1 class="text-2xl font-bold">New Purchase</h1>
-         <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Go Back</button>
+         <NuxtLink
+         to="/dashboard" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Go Back</NuxtLink>
       </div>
       
       <!-- Customer & Invoice Info -->

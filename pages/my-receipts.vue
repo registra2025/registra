@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { collection, getDocs } from 'firebase/firestore'
+import ReceiptDetails from '~/components/receipt-details.vue'
 
 const receipts = ref([])
 const loading = ref(true)
@@ -13,13 +14,20 @@ onMounted(async () => {
 
   const snapshot = await getDocs(
     collection($firestore, 'users', currentUser.uid, 'receipts')
-  )
+  ) 
   receipts.value = snapshot.docs.map(doc => ({
     id: doc.id,
+    showDetails:false,
     ...doc.data()
   }))
   loading.value = false
 })
+
+const toggleDetails = (id) => {
+  const receipt = receipts.value.find(r => r.id === id)
+  if (receipt) receipt.showDetails = !receipt.showDetails
+}
+
 </script>
 
 <template>
@@ -27,7 +35,7 @@ onMounted(async () => {
     <h2 class="text-xl font-semibold mb-4">My Receipts</h2>
     <div v-if="loading">Loading...</div>
     <div v-else-if="receipts.length === 0">No receipts found.</div>
-    <ul v-else class="space-y-2">
+    <ul v-else class="space-y-4">
       <li
         v-for="receipt in receipts"
         :key="receipt.id"
@@ -36,12 +44,24 @@ onMounted(async () => {
         <p><strong>Invoice #:</strong> {{ receipt.invoiceNumber }}</p>
         <p><strong>Date:</strong> {{ new Date(receipt.timestamp).toLocaleString() }}</p>
         <p><strong>Total:</strong> ₦{{ receipt.total }}</p>
-        <p><strong>Items:</strong></p>
-        <ul class="pl-4 list-disc">
-          <li v-for="item in receipt.items" :key="item.itemId">
-            {{ item.itemName }} (x{{ item.quantity }}) - ₦{{ item.price }}
-          </li>
-        </ul>
+
+        <button
+          class="mt-2 text-blue-600 hover:underline"
+          @click="toggleDetails(receipt.id)"
+        >
+          {{ receipt.showDetails ? 'Hide Details' : 'View Details' }}
+        </button>
+
+        <!-- 👇 Show full receipt layout if toggled -->
+        <ReceiptDetails
+          v-if="receipt.showDetails"
+          :invoiceNumber="receipt.invoiceNumber"
+          :customer="receipt.customer || 'N/A'"
+          :formattedDate="new Date(receipt.timestamp).toLocaleString()"
+          :paymentMethod="receipt.payment || 'Cash'"
+          :products="receipt.items"
+          :total="receipt.total"
+        />
       </li>
     </ul>
   </div>

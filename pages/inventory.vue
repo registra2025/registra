@@ -6,6 +6,7 @@ import { ref, onMounted } from "vue";
 import { collection, getDocs, addDoc, onSnapshot, query, where } from "firebase/firestore";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 import Scan from './scan.vue';
+import { v4 as uuidv4 } from 'uuid';
 
 const { $firestore, $firebaseApp } = useNuxtApp();
 const db = $firestore;
@@ -77,8 +78,9 @@ const addNewItem = async () => {
 
   let imageUrl = "";
   if (selectedImage.value) {
-    const imagePath = 'inventory/${Date.now()}-${selectedImage.value.name}';
-    const imgRef = storageRef(storage, imagePath);
+   const imagePath = `inventory/${uuidv4()}-${selectedImage.value.name}`;
+   const imgRef = storageRef(storage, imagePath);
+   console.log("Uploading to path:", imagePath);
 
     try {
       const snapshot = await uploadBytes(imgRef, selectedImage.value);

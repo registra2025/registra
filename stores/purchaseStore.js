@@ -37,5 +37,9 @@ export const usePurchaseStore = defineStore('purchase', {
         createdAt: new Date()
       })
     }
+  },
+  persist: {
+    enabled: true,
+    storage: typeof window !== 'undefined' ? window.sessionStorage : undefined
   }
 })

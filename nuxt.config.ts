@@ -12,12 +12,5 @@ export default defineNuxtConfig({
             tailwindcss(),
         ]
     },
-    // components: true,
     // ssr: false
-//     postcss: {
-//         plugins: {
-//             tailwindcss: {},
-//             autoprefixer: {},
-//         },
-//   },
 });
