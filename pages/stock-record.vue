@@ -41,7 +41,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="p-2 sm:p-6 w-full max-w-5xl mx-auto">
+  <div class="p-2 sm:p-6 w-full max-w-8xl min-w-4xl mx-auto">
   <h2 class="text-2xl sm:text-3xl font-extrabold mb-6 text-[#1c4375] tracking-tight text-center">Inventory</h2>
 
   <div v-if="loading" class="flex flex-col items-center justify-center py-16">
@@ -53,7 +53,7 @@ onMounted(() => {
   <div class="overflow-x-auto rounded-xl shadow-lg bg-white">
     <table class="w-full text-sm sm:text-base">
       <thead>
-        <tr class="bg-[#eaf1fb] text-[#1c4375]">
+        <tr class="bg-[#c0e6fd] text-[#1c4375]">
           <th class="p-3 font-semibold text-left">Image</th>
           <th class="p-3 font-semibold text-left">Item ID</th>
           <th class="p-3 font-semibold text-left">Name</th>
@@ -67,7 +67,7 @@ onMounted(() => {
         <tr
           v-for="item in inventory"
           :key="item.id"
-          class="even:bg-[#f7fafd] hover:bg-[#eaf1fb] transition cursor-pointer"
+          class="even:bg-[#dcf0fd] hover:bg-[#95d7fb] transition cursor-pointer"
           @click="$router.push({ path: '/stock-item', query: { itemId: item.itemId } })"
         >
 
@@ -82,8 +82,8 @@ onMounted(() => {
           </td>
           <td class="p-2 font-mono font-medium">{{ item.itemId }}</td>
           <td class="p-2 font-semibold">{{ item.itemName }}</td>
-          <td class="p-2 text-green-700 font-bold">${{ item.itemPrice }}</td>
-          <td class="p-2 text-blue-700 font-bold">{{ item.itemQty }}</td>
+          <td class="p-2 text-green-700 font-bold">BD {{ item.itemPrice }} </td>
+          <td class="p-2 text-blue-900 font-bold">{{ item.itemQty }}</td>
           <td class="p-2 font-semibold">{{ item.itemDesc }}</td>
         </tr>
 

@@ -131,14 +131,14 @@ const stopCamera = () => { isCameraActive.value = false; };
 
 <template>
   <div class="min-h-[80vh] flex items-center justify-center">
-    <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center">
+    <div class="w-full max-w-md bg-[#63bff7] rounded-2xl shadow-lg p-8 flex flex-col items-center">
       <h3 class="text-2xl font-extrabold text-[#1c4375] mb-6">Add Item</h3>
       <div class="w-full flex flex-col gap-4">
-        <input v-model="newItem.itemId" placeholder="Item ID" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-blue-50 focus:outline-none transition" />
-        <input v-model="newItem.itemName" placeholder="Name" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-blue-50 focus:outline-none transition" />
-        <input v-model="newItem.itemPrice" placeholder="Price" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-blue-50 focus:outline-none transition" />
-        <input v-model="newItem.itemQty" placeholder="Quantity" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-blue-50 focus:outline-none transition" />
-        <input v-model="newItem.itemDesc" placeholder="Description" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-blue-50 focus:outline-none transition" />
+        <input v-model="newItem.itemId" placeholder="Item ID" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-[#dcf0fd] focus:outline-none transition" />
+        <input v-model="newItem.itemName" placeholder="Name" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-[#dcf0fd] focus:outline-none transition" />
+        <input v-model="newItem.itemPrice" placeholder="Price" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-[#dcf0fd] focus:outline-none transition" />
+        <input v-model="newItem.itemQty" placeholder="Quantity" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-[#dcf0fd] focus:outline-none transition" />
+        <input v-model="newItem.itemDesc" placeholder="Description" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-[#dcf0fd] focus:outline-none transition" />
         <!-- Image Upload Input -->
         <label class="block w-full">
           <span class="text-gray-600 text-sm font-semibold mb-1">Upload Image</span>
@@ -147,7 +147,7 @@ const stopCamera = () => { isCameraActive.value = false; };
             accept="image/*"
             capture="environment"
             @change="handleImageChange"
-            class="w-full p-2 rounded-lg border border-gray-300 bg-blue-50 text-black focus:outline-none mt-1"
+            class="w-full p-2 rounded-lg border border-gray-300 bg-[#dcf0fd] hover:bg-[#c0e6fd] active-bg-[#c0e6fd] text-black focus:outline-none mt-1"
           />
         </label>
         <!-- Preview the selected image -->
@@ -162,7 +162,7 @@ const stopCamera = () => { isCameraActive.value = false; };
       <!-- Buttons -->
       <div class="flex gap-4 mt-6 w-full">
         <button @click="addNewItem" class="flex-1 bg-[#1c4375] hover:bg-[#2966b1] text-white font-semibold p-3 rounded-lg shadow transition">Add Item</button>
-        <button @click="toggleCamera" class="flex-1 bg-blue-500 hover:bg-blue-700 text-white font-semibold p-3 rounded-lg shadow transition">Scan</button>
+        <button @click="toggleCamera" class="flex-1 bg-[#2170d4] hover:bg-blue-800 text-white font-semibold p-3 rounded-lg shadow transition">Scan</button>
       </div>
       <!-- Barcode Scanner -->
       <scan @scanBarcode="handleScannedBarcode" @stopCamera="stopCamera" v-if="isCameraActive" />

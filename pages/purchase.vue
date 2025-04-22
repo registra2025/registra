@@ -1,10 +1,10 @@
 <template>
-   <div class="p-4 bg-[#1c4375] min-h-full text-gray-800 dark:text-white rounded-[17px] -m-4">
+   <div class="p-4 bg-[#63bff7] min-h-full text-gray-800 dark:text-white rounded-[17px] -m-4">
       <!-- Header -->
       <div class="flex justify-between items-center mb-6">
-         <h1 class="text-2xl font-bold">New Purchase</h1>
+         <h1 class="text-2xl text-blue-950 font-bold">New Purchase</h1>
          <NuxtLink
-         to="/dashboard" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Go Back
+         to="/dashboard" class="bg-[#2170d4] text-white px-4 py-2 rounded hover:bg-blue-400">Go Back
       </NuxtLink>
       </div>
       
@@ -12,18 +12,18 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
          <div>
             <label class="block mb-1">Customer Name</label>
-            <div class="w-full border px-3 py-2 rounded bg-white dark:bg-gray-800">
+            <div class="w-full border px-3 py-2 rounded text-blue-950 bg-white dark:bg-[#dcf0fd]">
                {{ customer }}
             </div>
          </div>
          <div>
             <label class="block mb-1">Invoice #</label>
             <!-- Invoice -->
-            <input v-model="invoice" type="text" class="w-full border px-3 py-2 rounded bg-white dark:bg-gray-800" :placeholder="invoice" />
+            <input v-model="invoice" type="text" class="w-full border px-3 py-2 rounded text-blue-950 bg-white dark:bg-[#dcf0fd]" :placeholder="invoice" />
          </div>
          <div>
             <label class="block mb-1">Date & Time</label>
-            <div class="w-full border px-3 py-2 rounded bg-white dark:bg-gray-800">
+            <div class="w-full border px-3 py-2 rounded text-blue-950 bg-white dark:bg-[#dcf0fd]">
                {{ formattedDateTime }}
             </div>
          </div>
@@ -33,11 +33,14 @@
       <div class="flex items-center gap-4 mb-6">
          <input 
          type="text" 
-         class="flex-1 border px-4 py-2 rounded bg-white dark:bg-gray-800" 
+         class="flex-1 border px-4 py-2 rounded text-blue-950 bg-white dark:bg-[#dcf0fd]" 
          placeholder="Scan barcode or enter product"
          v-model="scannedCode"
          />
-         <button @click="toggleCamera" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+         <button @click="handleManualBarcode" class="bg-[#2170d4] text-white px-4 py-2 rounded hover:bg-blue-400">
+            Enter
+         </button>
+         <button @click="toggleCamera" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">
             {{ isCameraActive ? 'Stop' : 'Scan' }}
          </button>
       </div>
@@ -45,7 +48,7 @@
       <!-- Product List Table -->
       <div class="overflow-x-auto mb-6">
          <table class="min-w-full text-left border">
-            <thead class="bg-gray-200 dark:bg-gray-700">
+            <thead class="text-blue-950 bg-white dark:bg-[#c0e6fd]">
                <tr>
                   <th class="px-4 py-2">Product</th>
                   <th class="px-4 py-2">Qty</th>
@@ -74,7 +77,7 @@
             <div>
                <label class="block mb-1">Payment Method</label>
                <!-- Payment -->
-               <select v-model="payment" class="w-full border px-3 py-2 rounded bg-white dark:bg-gray-800">
+               <select v-model="payment" class="w-full border px-3 py-2 rounded text-blue-950 bg-white dark:bg-[#dcf0fd]">
                   <option>Cash</option>
                   <option>Card</option>
                   <option>Bank Transfer</option>
@@ -82,7 +85,7 @@
             </div>
          </div>
          
-         <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded space-y-2">
+         <div class="text-blue-950 bg-white dark:bg-[#dcf0fd] p-4 rounded space-y-2">
             <div class="flex justify-between">
                <span>Subtotal:</span>
                <span>${{ subtotal.toFixed(2) }}</span>
@@ -105,9 +108,9 @@
       <!-- Submit Button -->
       <div class="mt-6 flex justify-end">
         <NuxtLink
-         to="/purchase-receipt"
+         to="/dashboard"
          @click="completePurchase"
-         class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700"
+         class="bg-[#2170d4] text-white px-6 py-3 rounded hover:bg-blue-800"
          >
          Proceed to Counter
       </NuxtLink>
@@ -181,6 +184,13 @@ function removeItem(index) {
 
 function toggleCamera() {
    isCameraActive.value = !isCameraActive.value
+}
+
+const handleManualBarcode = () => {
+  if (scannedCode.value.trim() !== '') {
+    handleScannedBarcode(scannedCode.value.trim())
+    scannedCode.value = '' // Clear the input after adding
+  }
 }
 
 // On barcode scan, lookup item by ID

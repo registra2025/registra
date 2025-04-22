@@ -88,19 +88,19 @@ onUnmounted(() => {
 
 <template>
   <div class="flex flex-col items-center justify-center max-h-screen p-4">
-    <h1 class="text-2xl font-bold text-[#2966b1] mb-4">Scan Product Barcode</h1>
+    <h1 class="text-2xl font-bold text-blue-950 mb-4">Scan Product Barcode</h1>
 
     <!-- Video Stream -->
     <video ref="videoRef" class="border w-full max-w-md" v-show="isCameraActive"></video>
 
     <!-- Editable Barcode Input -->
     <div class="mt-4 w-full max-w-md">
-      <label class="block text-lg font-semibold mb-1">Scanned Code:</label>
+      <label class="block text-[#2170d4] text-lg font-semibold mb-1">Scanned Code:</label>
       <div class="flex gap-2">
         <input 
           type="text" 
           v-model="barcode" 
-          class="w-full px-4 py-2 border rounded-lg text-lg"
+          class="w-full px-4 py-2  border rounded-lg text-lg"
         />
         <!-- <button 
           @click="submitBarcode"
@@ -114,7 +114,7 @@ onUnmounted(() => {
     <!-- Start/Stop Button -->
     <button 
       @click="toggleCamera" 
-      class="mt-4 px-6 py-3 bg-[#2966b1] text-white rounded-lg hover:bg-[#1e4c8a]"
+      class="mt-4 px-6 py-3 bg-[#2170d4] text-white rounded-lg hover:bg-blue-400"
     >
       {{ isCameraActive ? 'Stop Camera' : 'Start Camera' }}
     </button>

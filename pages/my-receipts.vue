@@ -50,7 +50,7 @@ const toggleDetails = (id) => {
         <p><strong>Total:</strong> BD {{ receipt.total }}</p>
 
         <button
-          class="mt-2 text-blue-600 hover:underline"
+          class="mt-2 text-[#2170d4] hover:underline"
           @click="toggleDetails(receipt.id)"
         >
           {{ receipt.showDetails ? 'Hide Details' : 'View Details' }}

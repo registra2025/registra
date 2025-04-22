@@ -3,7 +3,7 @@
         style="width: 210mm; height: auto; font-family: sans-serif; min-height:400px; max-height: 1500px;">
      <!-- Logo -->
      <div class="text-center mb-4">
-       <img src="/reg_logo_rm1.jpg" alt="Register Logo" class="mx-auto mb-2" style="max-height: 50px;" />
+       <img src="/reg_logo_rm.png" alt="Register Logo" class="mx-auto mb-2" style="max-height: 50px;" />
      </div>
  
      <!-- Invoice Info -->
@@ -45,9 +45,8 @@
      <div class="mt-4">
        <button 
          @click="downloadReceipt" 
-         class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500"
-       >
-         Download Receipt
+         class="bg-[#2170d4] text-white px-4 py-2 rounded-md hover:bg-blue-800"
+       > Download Receipt
        </button>
      </div>
  

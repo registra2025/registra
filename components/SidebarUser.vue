@@ -7,14 +7,14 @@
        <img
          src="/reg_logo_rm.png"
          alt="Logo"
-         class="w-[200px] h-[200px] object-contain max-w-full max-h-full md:w-[270px] md:h-[200px] sm:w-[120px] sm:h-[120px]"
+         class="w-[200px] h-[200px] object-contain max-w-full max-h-full md:w-[260px] md:h-[200px] sm:w-[120px] sm:h-[120px]"
        />
      </NuxtLink>
  
       <!-- User Links -->
       <div class="flex flex-col gap-2 w-full overflow-y-auto">
-        <NuxtLink to="/dashboard" class="min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-xl sm:text-2xl font-normal">DASHBOARD</NuxtLink>
-        <NuxtLink to="/my-receipts" class="min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center text-black pl-4 text-xl sm:text-2xl font-normal">MY RECEIPTS</NuxtLink>
+        <NuxtLink to="/dashboard" class="min-h-[49px] bg-[#c0e6fd] rounded-[7px] flex items-center text-blue-950 pl-4 text-xl sm:text-2xl font-normal hover:bg-[#95d7fb] active:bg-[#95d7fb]">DASHBOARD</NuxtLink>
+        <NuxtLink to="/my-receipts" class="min-h-[49px] bg-[#c0e6fd] rounded-[7px] flex items-center text-blue-950 pl-4 text-xl sm:text-2xl font-normal hover:bg-[#95d7fb] active:bg-[#95d7fb]">MY RECEIPTS</NuxtLink>
       </div>
      </div>
    </aside>
