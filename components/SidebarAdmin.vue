@@ -37,6 +37,12 @@
            PERFORMANCE
          </NuxtLink>
          <NuxtLink
+           to="/customer-sales"
+           class="min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-xl sm:text-2xl md:text-2xl font-normal"
+         >
+           CUSTOMER SALES
+         </NuxtLink>
+         <NuxtLink
            to="/sales-receipt"
            class="min-h-[49px] bg-[#ffffff] rounded-[7px] flex items-center pl-4 text-black text-xl sm:text-2xl md:text-2xl font-normal"
          >

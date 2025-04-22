@@ -257,28 +257,31 @@ async function completePurchase() {
   const paymentMethod = payment.value
 
   try {
-    await saveReceiptToFirestore({
+    // Only add sale to pending_sales for employee processing
+    const { $auth, $firestore } = useNuxtApp()
+    const user = $auth.currentUser
+    if (!user) throw new Error('User not authenticated')
+    const customerId = user.uid
+    const pendingSale = {
+      invoiceNumber: invoiceId,
       items,
       total: totalAmount,
-      invoiceNumber: invoiceId,
-      customer: customerName,
-      date: dateValue,
-      payment: paymentMethod
-    })
-    // Update the store for the receipt page
-    purchaseStore.setPurchaseData({
-      invoice: invoiceId,
-      customer: customerName,
+      customerName,
+      customerId,
       date: dateValue,
       payment: paymentMethod,
-      products: items,
-      total: totalAmount,
-      createdAt: new Date()
-    })
-    router.push('/purchase-receipt')
+      timestamp: Date.now()
+    }
+    await setDoc(doc($firestore, 'pending_sales', `${invoiceId}-${customerId}`), pendingSale)
+
+    // Optionally, show a message or redirect to a 'waiting for counter' page
+    alert('Your order has been sent to the counter. Please wait for the cashier to complete your sale.')
+    // router.push('/waiting-for-counter') // Uncomment and create this page if needed
   } catch (err) {
-    console.error('Failed to save receipt:', err)
-    alert('Failed to save receipt.')
+    console.error('Failed to add pending sale:', err)
+    alert('Failed to add pending sale.')
   }
 }
+
+
 </script>

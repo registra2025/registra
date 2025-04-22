@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col items-center justify-center text-center p-8">
-      <h1 class="text-4xl font-bold text-[#2966b1] mb-4">Welcome to Our POS System</h1>
+      <h1 class="text-4xl font-bold text-[#2966b1] mb-4">Welcome to REGISTRA POS System</h1>
       <p class="text-lg text-gray-700 max-w-2xl">
         Managing your business transactions and inventory has never been easier! Our POS system helps you streamline operations,
         track inventory in real-time, and improve customer service.

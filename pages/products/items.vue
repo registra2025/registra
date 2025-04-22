@@ -80,14 +80,15 @@ onMounted(async () => {
     <!-- Product Display -->
     <div v-else-if="product" class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center">
         <!-- Image -->
-        <img
-          v-if="product.imageUrl"
-          :src="product.imageUrl"
-          alt="Product Image"
-          class="w-fit h-fit object-cover rounded mb-4 border border-gray-200 shadow"
-        />
-        <div v-else class="w-40 h-40 flex items-center justify-center bg-gray-100 rounded text-gray-400 mb-4">No image</div>
-
+  <div class="w-100 h-100 mb-4 border border-gray-200 shadow rounded flex items-center justify-center bg-white">
+    <img
+      v-if="product.imageUrl"
+      :src="product.imageUrl"
+      alt="Product Image"
+      class="w-full h-full object-contain rounded"
+    />
+    <div v-else class="text-gray-400">No image</div>
+  </div>
         <!-- Product Info -->
         <h2 class="text-2xl font-bold text-[#1c4375] mb-2">{{ product.itemName }}</h2>
         <div class="text-gray-700 mb-2">ID: <span class="font-mono">{{ product.itemId }}</span></div>
