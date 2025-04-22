@@ -60,7 +60,22 @@
             <tbody>
                <tr v-for="(item, index) in products" :key="index" class="border-t">
                   <td class="px-4 py-2">{{ item.name }}</td>
-                  <td class="px-4 py-2">{{ item.qty }}</td>
+                   <!-- Qty Controls -->
+        <td class="px-4 py-2">
+          <div class="flex items-center space-x-2">
+            <button
+              @click="decreaseQty(index)"
+              class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 disabled:opacity-50"
+              :disabled="item.qty <= 1"
+            >−</button>
+            <span class="w-6 text-center">{{ item.qty }}</span>
+            <button
+              @click="increaseQty(index)"
+              class="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600"
+            >+</button>
+          </div>
+        </td>
+
                   <td class="px-4 py-2">${{ item.price }}</td>
                   <td class="px-4 py-2">${{ item.qty * item.price }}</td>
                   <td class="px-4 py-2">
@@ -107,13 +122,13 @@
       
       <!-- Submit Button -->
       <div class="mt-6 flex justify-end">
-        <NuxtLink
-         to="/dashboard"
-         @click="completePurchase"
-         class="bg-[#2170d4] text-white px-6 py-3 rounded hover:bg-blue-800"
-         >
-         Proceed to Counter
-      </NuxtLink>
+               <button
+      @click="completePurchase"
+      class="bg-[#2170d4] text-white px-6 py-3 rounded hover:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed"
+      :disabled="products.length === 0"
+      >
+      Proceed to Counter
+      </button>
       </div>
    
    <!-- Scan Component -->
@@ -139,6 +154,13 @@ const isCameraActive = ref(false)
 const payment = ref('Cash')
 
 const customer = ref('Walk-in')
+
+function generateInvoiceNumber() {
+  const now = new Date()
+  return `INV-${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}-${now.getTime()}`
+}
+
+const invoice = ref('')
 
 // Set customer name from email
 onMounted(() => {
@@ -221,12 +243,15 @@ const handleScannedBarcode = async (barcode) => {
   }
 };
 
-function generateInvoiceNumber() {
-  const now = new Date()
-  return `INV-${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}-${now.getTime()}`
+function increaseQty(index) {
+  products.value[index].qty += 1;
 }
 
-const invoice = ref('')
+function decreaseQty(index) {
+  if (products.value[index].qty > 1) {
+    products.value[index].qty -= 1;
+  }
+}
 
 // Call this when completing the sale
 import { doc, setDoc } from 'firebase/firestore'
@@ -254,6 +279,11 @@ async function saveReceiptToFirestore({ items, total, invoiceNumber, customer, d
 }
 
 async function completePurchase() {
+  if (products.value.length === 0) {
+    alert('Error: No product entered. Please add at least one item before proceeding.');
+    return; // Stop further execution
+  }
+
   const invoiceId = generateInvoiceNumber()
   const items = products.value.map(item => ({
     itemId: item.id,
@@ -267,11 +297,11 @@ async function completePurchase() {
   const paymentMethod = payment.value
 
   try {
-    // Only add sale to pending_sales for employee processing
     const { $auth, $firestore } = useNuxtApp()
     const user = $auth.currentUser
     if (!user) throw new Error('User not authenticated')
     const customerId = user.uid
+
     const pendingSale = {
       invoiceNumber: invoiceId,
       items,
@@ -282,11 +312,17 @@ async function completePurchase() {
       payment: paymentMethod,
       timestamp: Date.now()
     }
-    await setDoc(doc($firestore, 'pending_sales', `${invoiceId}-${customerId}`), pendingSale)
 
-    // Optionally, show a message or redirect to a 'waiting for counter' page
+    await setDoc(doc($firestore, 'pending_sales', `${invoiceId}-${customerId}`), pendingSale)
+    // Clear form
+   products.value = []
+   scannedCode.value = ''
+   payment.value = 'Cash'
+   invoice.value = generateInvoiceNumber()
+
+
     alert('Your order has been sent to the counter. Please wait for the cashier to complete your sale.')
-    // router.push('/waiting-for-counter') // Uncomment and create this page if needed
+    // router.push('/waiting-for-counter') // Optional redirect
   } catch (err) {
     console.error('Failed to add pending sale:', err)
     alert('Failed to add pending sale.')

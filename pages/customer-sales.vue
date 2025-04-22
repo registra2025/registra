@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { getPendingSales, completeSaleAndSaveReceipt } from '~/utils/sales.js'
+import { getPendingSales, completeSaleAndSaveReceipt, cancelSale } from '~/utils/sales.js'
 
 const sales = ref([])
 const loading = ref(true)
@@ -16,6 +16,13 @@ const fetchSales = async () => {
 const toggleExpand = (idx) => {
   expanded.value[idx] = !expanded.value[idx]
 }
+
+const cancelPendingSale = async (sale, idx) => {
+  await cancelSale(sale.id)
+  sales.value.splice(idx, 1)
+  expanded.value.splice(idx, 1)
+}
+
 
 const completeSale = async (sale, idx) => {
   // Save receipt to Firestore for the customer, but do not show to employee
@@ -81,7 +88,10 @@ onMounted(() => {
             <div><strong>Payment Method:</strong> {{ sale.payment }}</div>
             <div><strong>Total:</strong> {{ formatCurrency(sale.total) }}</div>
           </div>
-          <button @click="completeSale(sale, idx)">Complete Sale</button>
+          <div class="flex gap-2">
+            <button @click="completeSale(sale, idx)">Complete Sale</button>
+            <button @click="cancelPendingSale(sale, idx)" class="bg-red-500 hover:bg-red-600">Cancel Sale</button>
+         </div>
         </div>
       </div>
     </div>

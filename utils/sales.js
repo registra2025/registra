@@ -11,6 +11,21 @@ export async function getPendingSales() {
   return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
 }
 
+export async function cancelSale(invoiceId, customerId) {
+   const { $firestore } = useNuxtApp()
+   const db = $firestore
+ 
+   try {
+     const pendingDocRef = doc(db, 'pending_sales', `${invoiceId}-${customerId}`)
+     await deleteDoc(pendingDocRef)
+     alert('Sale canceled successfully!')
+   } catch (err) {
+     console.error('Error canceling sale:', err)
+     alert('Failed to cancel sale.')
+   }
+ }
+ 
+
 // Complete a sale, save receipt for customer, and remove from pending
 export async function completeSaleAndSaveReceipt(sale) {
   const { $firestore } = useNuxtApp()
