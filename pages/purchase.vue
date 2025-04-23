@@ -322,6 +322,7 @@ async function completePurchase() {
 
 
     alert('Your order has been sent to the counter. Please wait for the cashier to complete your sale.')
+    alert('After the sale is completed please check your "My Receipts" section for your receipt.')
     // router.push('/waiting-for-counter') // Optional redirect
   } catch (err) {
     console.error('Failed to add pending sale:', err)
