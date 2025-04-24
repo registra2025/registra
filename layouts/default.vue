@@ -58,7 +58,7 @@ const handleMainInteraction = () => {
   clearTimeout(hideTimeout);
   hideTimeout = setTimeout(() => {
     isSidebarOpen.value = false;
-  }, 10000);
+  }, 5000);
 };
 
 onBeforeUnmount(() => {
