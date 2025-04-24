@@ -1,5 +1,5 @@
 <template>
-   <div class="p-4 bg-[#63bff7] min-h-full text-gray-800 dark:text-white rounded-[17px] -m-4">
+   <div class="p-4 bg-[#63bff7] min-h-screen text-gray-800 dark:text-white rounded-[17px] -m-4">
       <!-- Header -->
       <div class="flex justify-between items-center mb-6">
          <h1 class="text-2xl text-blue-950 font-bold">New Purchase</h1>
@@ -46,7 +46,7 @@
       </div>
       
       <!-- Product List Table -->
-      <div class="overflow-x-auto mb-6">
+      <div class="overflow-x-auto max-h-[300px] overflow-y-auto mb-6 rounded border">
          <table class="min-w-full text-left border">
             <thead class="text-blue-950 bg-white dark:bg-[#c0e6fd]">
                <tr>
@@ -76,8 +76,8 @@
           </div>
         </td>
 
-                  <td class="px-4 py-2">${{ item.price }}</td>
-                  <td class="px-4 py-2">${{ item.qty * item.price }}</td>
+                  <td class="px-4 py-2">BHD {{ item.price }}</td>
+                  <td class="px-4 py-2">BHD {{ item.qty * item.price }}</td>
                   <td class="px-4 py-2">
                      <button class="text-red-600 hover:underline" @click="removeItem(index)">Remove</button>
                   </td>
@@ -103,19 +103,19 @@
          <div class="text-blue-950 bg-white dark:bg-[#dcf0fd] p-4 rounded space-y-2">
             <div class="flex justify-between">
                <span>Subtotal:</span>
-               <span>${{ subtotal.toFixed(2) }}</span>
+               <span>BHD {{ subtotal.toFixed(2) }}</span>
             </div>
             <div class="flex justify-between">
                <span>Tax (10%):</span>
-               <span>${{ tax.toFixed(2) }}</span>
+               <span>BHD {{ tax.toFixed(2) }}</span>
             </div>
             <div class="flex justify-between">
                <span>Discount:</span>
-               <span>$0.00</span>
+               <span>BHD 0.00</span>
             </div>
             <div class="flex justify-between font-bold text-lg border-t pt-2">
                <span>Total:</span>
-               <span>${{ total.toFixed(2) }}</span>
+               <span>BHD {{ total.toFixed(2) }}</span>
             </div>
          </div>
       </div>

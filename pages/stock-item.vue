@@ -54,11 +54,11 @@ onMounted(async () => {
       </div>
       <div v-else-if="error" class="text-center text-red-500 text-lg py-12">{{ error }}</div>
       <div v-else-if="item" class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center">
-        <img v-if="item.imageUrl" :src="item.imageUrl" alt="Item Image" class="w-fit h-fit object-cover rounded mb-4 border border-gray-200 shadow" />
+        <img v-if="item.imageUrl" :src="item.imageUrl" alt="Item Image" class="w-full h-full object-contain rounded mb-4 border border-gray-200 shadow" />
         <div v-else class="w-40 h-40 flex items-center justify-center bg-gray-100 rounded text-gray-400 mb-4">No image</div>
         <h2 class="text-2xl font-bold text-[#1c4375] mb-2">{{ item.itemName }}</h2>
         <div class="text-gray-700 mb-2">ID: <span class="font-mono">{{ item.itemId }}</span></div>
-        <div class="text-green-700 font-bold text-lg mb-2">${{ item.itemPrice }}</div>
+        <div class="text-green-700 font-bold text-lg mb-2">BHD {{ item.itemPrice }}</div>
         <div class="text-blue-700 font-bold text-lg mb-4">Quantity: {{ item.itemQty }}</div>
         <div class="text-gray-600 text-base mb-2" v-if="item.itemDesc">{{ item.itemDesc }}</div>
         <div class="text-gray-400 text-sm italic" v-else>No description available.</div>

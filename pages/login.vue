@@ -41,6 +41,7 @@ const googleSignIn = async () => {
     alert("Logged in with Google!");
     router.push("/dashboard");
   } catch (error) {
+    console.error('Firebase error:', error);
     alert(error.message);
   }
 };

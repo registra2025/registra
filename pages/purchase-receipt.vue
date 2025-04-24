@@ -27,9 +27,9 @@
              <tr v-for="(item, i) in products" :key="i" class="border-b">
                 <td class="py-1">{{ item.itemId || item.id }}</td>
                 <td class="pb-1 italic text-gray-600">{{ item.itemName || item.name }}</td>
-                <td>${{ (item.price || 0).toFixed(2) }}</td>
+                <td>BHD {{ (item.price || 0).toFixed(2) }}</td>
                 <td>{{ item.quantity ?? item.qty }}</td>
-                <td>${{ ((item.quantity ?? item.qty) * (item.price || 0)).toFixed(2) }}</td>
+                <td>BHD {{ ((item.quantity ?? item.qty) * (item.price || 0)).toFixed(2) }}</td>
             </tr>
           </tbody>
        </table>
@@ -37,7 +37,7 @@
        <!-- Payment Summary -->
        <div class="text-sm mt-4">
           <p><strong>Payment Method:</strong> {{ paymentMethod }}</p>
-          <p><strong>Total:</strong> ${{ total.toFixed(2) }}</p>
+          <p><strong>Total:</strong> BHD{{ total.toFixed(2) }}</p>
        </div>
        
        <!-- PDF Download Button -->

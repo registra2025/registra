@@ -47,7 +47,7 @@ const toggleDetails = (id) => {
       >
         <p><strong>Invoice #:</strong> {{ receipt.invoiceNumber }}</p>
         <p><strong>Date:</strong> {{ new Date(receipt.timestamp).toLocaleString() }}</p>
-        <p><strong>Total:</strong> BD {{ receipt.total }}</p>
+        <p><strong>Total:</strong> BHD {{ receipt.total }}</p>
 
         <button
           class="mt-2 text-[#2170d4] hover:underline"

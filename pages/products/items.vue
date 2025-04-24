@@ -92,7 +92,7 @@ onMounted(async () => {
         <!-- Product Info -->
         <h2 class="text-2xl font-bold text-[#1c4375] mb-2">{{ product.itemName }}</h2>
         <div class="text-gray-700 mb-2">ID: <span class="font-mono">{{ product.itemId }}</span></div>
-        <div class="text-green-700 font-bold text-lg mb-2">₦{{ product.itemPrice }}</div>
+        <div class="text-green-700 font-bold text-lg mb-2">BHD {{ product.itemPrice }}</div>
         <div class="text-blue-700 font-bold text-lg mb-4">Qty in Stock: {{ product.itemQty }}</div>
         
         <!-- Description -->

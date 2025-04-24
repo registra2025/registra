@@ -82,7 +82,7 @@ onMounted(() => {
           </td>
           <td class="p-2 font-mono font-medium">{{ item.itemId }}</td>
           <td class="p-2 font-semibold">{{ item.itemName }}</td>
-          <td class="p-2 text-green-700 font-bold">BD {{ item.itemPrice }} </td>
+          <td class="p-2 text-green-700 font-bold">BHD {{ item.itemPrice }} </td>
           <td class="p-2 text-blue-900 font-bold">{{ item.itemQty }}</td>
           <td class="p-2 font-semibold">{{ item.itemDesc }}</td>
         </tr>
@@ -109,7 +109,7 @@ onMounted(() => {
       <div class="flex-1">
         <div class="font-mono font-medium text-xs text-gray-500">ID: {{ item.itemId }}</div>
         <div class="font-bold text-base text-[#1c4375]">{{ item.itemName }}</div>
-        <div class="text-green-700 font-bold text-sm">${{ item.itemPrice }}</div>
+        <div class="text-green-700 font-bold text-sm">BHD {{ item.itemPrice }}</div>
         <div class="text-blue-700 font-bold text-sm">Qty: {{ item.itemQty }}</div>
         <div class="text-blue-700 font-bold text-sm">Qty: {{ item.itemDesc }}</div>
       </div>

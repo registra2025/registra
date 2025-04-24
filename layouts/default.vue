@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watchEffect } from 'vue';
+import { ref, onMounted, watchEffect, onBeforeUnmount } from 'vue';
 import { useRoute } from 'nuxt/app';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import Sidebar from '~/components/Sidebar.vue';
@@ -48,6 +48,19 @@ const pageTitles = {
 watchEffect(() => {
   pageTitle.value = pageTitles[route.path] || "REGISTRA";
 });
+
+// Auto-hide sidebar after 3s if main content is interacted with
+let hideTimeout = null;
+const handleMainInteraction = () => {
+  clearTimeout(hideTimeout);
+  hideTimeout = setTimeout(() => {
+    isSidebarOpen.value = false;
+  }, 3000);
+};
+
+onBeforeUnmount(() => {
+  clearTimeout(hideTimeout);
+});
 </script>
 
 <template>
@@ -70,7 +83,12 @@ watchEffect(() => {
       </div>
 
       <!-- Main Content -->
-      <main class="flex-1 overflow-y-auto p-4 m-2 -ml-0.5 rounded-[15px] border-2 border-[#2170d4] bg-white dark:bg-darkBg shadow-md">
+      <main
+        class="flex-grow m-2 overflow-y-auto p-4 -ml-0.5 rounded-[15px] border-2 border-[#2170d4] bg-white dark:bg-darkBg shadow-md"
+        @click="handleMainInteraction"
+        @mouseenter="handleMainInteraction"
+        @touchstart="handleMainInteraction"
+      >
         <slot />
       </main>
     </div>
