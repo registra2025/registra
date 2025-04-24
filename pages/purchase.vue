@@ -75,7 +75,6 @@
             >+</button>
           </div>
         </td>
-
                   <td class="px-4 py-2">BHD {{ item.price }}</td>
                   <td class="px-4 py-2">BHD {{ item.qty * item.price }}</td>
                   <td class="px-4 py-2">
@@ -139,8 +138,9 @@
 <script setup>
 
 import { ref, computed, onUnmounted, onMounted } from 'vue'
-import { collection, query, where, getDocs } from 'firebase/firestore'
+import { collection, query, where, getDocs, getDoc, doc } from 'firebase/firestore'
 import { usePurchaseStore } from '~/stores/purchaseStore'
+import { useCartStore } from '~/stores/cart'
 import { useRouter } from 'vue-router'
 import scan from './scan.vue'
 
@@ -195,6 +195,23 @@ function updateDateTime() {
 }
 
 const products = ref([])
+const cartStore = useCartStore();
+
+onMounted(async () => {
+  // Sync cart to purchase table if sessionStorage.cartSync exists
+  const cartSync = sessionStorage.getItem('cartSync');
+  if (cartSync) {
+    try {
+      const items = JSON.parse(cartSync);
+      for (const item of items) {
+        await handleScannedBarcode(item.itemId, item.qty);
+      }
+    } catch (e) {
+      console.error('Failed to sync cart to purchase:', e);
+    }
+    sessionStorage.removeItem('cartSync');
+  }
+})
 
 const subtotal = computed(() => products.value.reduce((sum, item) => sum + item.qty * item.price, 0))
 const tax = computed(() => subtotal.value * 0.10)
@@ -215,31 +232,42 @@ const handleManualBarcode = () => {
   }
 }
 
-// On barcode scan, lookup item by ID
-const handleScannedBarcode = async (barcode) => {
+// On barcode scan, lookup item in inventory by numeric itemId or Firestore doc ID
+const handleScannedBarcode = async (barcode, qty = 1) => {
   if (!process.client) return;
   scannedCode.value = barcode;
   try {
-    const q = query(collection(db, 'inventory'), where('itemId', '==', Number(barcode)));
-    const snapshot = await getDocs(q);
-    if (!snapshot.empty) {
-      const doc = snapshot.docs[0].data();
-      const existing = products.value.find(item => item.id === doc.itemId);
-      if (existing) {
-        existing.qty += 1;
-      } else {
-        products.value.push({
-          id: doc.itemId,
-          name: doc.itemName,
-          price: doc.itemPrice,
-          qty: 1
-        });
-      }
+    let data;
+    // Determine if code is numeric itemId
+    if (/^\d+$/.test(barcode)) {
+      // Numeric itemId lookup
+      const q = query(collection(db, 'inventory'), where('itemId', '==', Number(barcode)));
+      const snap = await getDocs(q);
+      if (snap.empty) throw new Error('Item not found in inventory');
+      data = snap.docs[0].data();
     } else {
-      alert('Item not found in inventory');
+      // Firestore doc ID lookup
+      const docRef = doc(db, 'inventory', barcode);
+      const docSnap = await getDoc(docRef);
+      if (!docSnap.exists()) throw new Error('Item not found in inventory');
+      data = docSnap.data();
+    }
+    const idVal = data.itemId;
+    // Add or update in products
+    const existing = products.value.find(item => item.id === idVal);
+    if (existing) {
+      existing.qty += qty;
+    } else {
+      products.value.push({
+        id: idVal,
+        name: data.itemName,
+        price: data.itemPrice,
+        qty
+      });
     }
   } catch (err) {
-    console.error('Firebase error:', err); 
+    console.error('Firebase or sync error:', err);
+    alert(err.message);
   }
 };
 
@@ -254,7 +282,7 @@ function decreaseQty(index) {
 }
 
 // Call this when completing the sale
-import { doc, setDoc } from 'firebase/firestore'
+import { setDoc } from 'firebase/firestore'
 import { useNuxtApp } from '#app'
 
 // Save receipt to Firestore under users/{userId}/receipts/{receiptId}

@@ -36,6 +36,21 @@ const newItem = ref({
   imageUrl: "", // Image URL field
 });
 
+const blockNonInteger = (e) => {
+  const key = e.key;
+  // Block non-numeric and decimal point input
+  if (!/^\d$/.test(key)) {
+    e.preventDefault();
+  }
+};
+
+const validateNumberInput = (e) => {
+  const allowedKeys = ['0','1','2','3','4','5','6','7','8','9','.'];
+  if (!allowedKeys.includes(e.key)) {
+    e.preventDefault();
+  }
+};
+
 // Selected image file
 const selectedImage = ref(null);
 const previewUrl = ref(null);
@@ -68,6 +83,7 @@ const addNewItem = async () => {
     alert("Please fill in all fields!");
     return;
   }
+
 
   const itemId = Number(newItem.value.itemId);
   const itemIdExists = await checkItemIdExists(itemId);
@@ -136,8 +152,25 @@ const stopCamera = () => { isCameraActive.value = false; };
       <div class="w-full flex flex-col gap-4">
         <input v-model="newItem.itemId" placeholder="Item ID" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-[#dcf0fd] focus:outline-none transition" />
         <input v-model="newItem.itemName" placeholder="Name" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-[#dcf0fd] focus:outline-none transition" />
-        <input v-model="newItem.itemPrice" placeholder="Price" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-[#dcf0fd] focus:outline-none transition" />
-        <input v-model="newItem.itemQty" placeholder="Quantity" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-[#dcf0fd] focus:outline-none transition" />
+         <input
+         v-model="newItem.itemPrice"
+         type="number"
+         min="0"
+         step="0.01"
+         placeholder="Price"
+         @keypress="validateNumberInput"
+         class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-[#dcf0fd] focus:outline-none transition"
+         />
+         <input
+         v-model="newItem.itemQty"
+         type="number"
+         min="0"
+         step="1"
+         placeholder="Quantity"
+         @keypress="validateNumberInput"
+         class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-[#dcf0fd] focus:outline-none transition"
+         />
+
         <input v-model="newItem.itemDesc" placeholder="Description" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-[#dcf0fd] focus:outline-none transition" />
         <!-- Image Upload Input -->
         <label class="block w-full">
@@ -162,7 +195,9 @@ const stopCamera = () => { isCameraActive.value = false; };
       <!-- Buttons -->
       <div class="flex gap-4 mt-6 w-full">
         <button @click="addNewItem" class="flex-1 bg-[#1c4375] hover:bg-[#2966b1] text-white font-semibold p-3 rounded-lg shadow transition">Add Item</button>
-        <button @click="toggleCamera" class="flex-1 bg-[#2170d4] hover:bg-blue-800 text-white font-semibold p-3 rounded-lg shadow transition">Scan</button>
+        <button @click="toggleCamera" class="flex-1 bg-[#2170d4] hover:bg-blue-800 text-white font-semibold p-3 rounded-lg shadow transition">
+         {{ isCameraActive ? 'Stop' : 'Scan' }}
+        </button>
       </div>
       <!-- Barcode Scanner -->
       <scan @scanBarcode="handleScannedBarcode" @stopCamera="stopCamera" v-if="isCameraActive" />

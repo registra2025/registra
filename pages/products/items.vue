@@ -1,7 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs, getDoc, doc } from 'firebase/firestore';
 import { useRoute } from '#app';
+import { useCartStore } from '~/stores/cart';
 
 const route = useRoute();
 const { $firestore } = useNuxtApp();
@@ -9,29 +10,36 @@ const db = $firestore;
 const product = ref(null);
 const loading = ref(true);
 const error = ref(null);
+const cartStore = useCartStore();
+const addSuccess = ref(false);
 
-// Function to fetch product details by barcode/itemId 
+// Function to fetch product details by numeric itemId or Firestore doc ID
 const fetchProduct = async (barcode) => {
   if (!process.client) return;
+  loading.value = true;
+  error.value = null;
   try {
-    loading.value = true;
-    error.value = null;
-    
-    const q = query(collection(db, 'inventory'), where('itemId', '==', Number(barcode)));
-    const querySnapshot = await getDocs(q);
-    
-    if (querySnapshot.empty) {
-      error.value = 'Product not found';
-      product.value = null;
+    let snapshot, data;
+    if (/^\d+$/.test(barcode)) {
+      // Numeric itemId lookup
+      const q = query(collection(db, 'inventory'), where('itemId', '==', Number(barcode)));
+      const querySnapshot = await getDocs(q);
+      if (querySnapshot.empty) throw new Error('Product not found');
+      snapshot = querySnapshot.docs[0];
+      data = snapshot.data();
     } else {
-      product.value = {
-        id: querySnapshot.docs[0].id,
-        ...querySnapshot.docs[0].data()
-      };
+      // Firestore doc ID lookup
+      const docRef = doc(db, 'inventory', barcode);
+      const docSnap = await getDoc(docRef);
+      if (!docSnap.exists()) throw new Error('Product not found');
+      snapshot = docSnap;
+      data = snapshot.data();
     }
+    product.value = { id: snapshot.id, ...data };
   } catch (err) {
     console.error('Firebase error:', err);
-    error.value = 'Error fetching product details';
+    error.value = err.message || 'Error fetching product details';
+    product.value = null;
   } finally {
     loading.value = false;
   }
@@ -44,6 +52,19 @@ onMounted(async () => {
     await fetchProduct(barcode);
   }
 });
+
+function addToCart() {
+  if (!product.value) return;
+  cartStore.addItem({
+    id: product.value.itemId, // Use itemId (numeric, from inventory) as the cart id
+    itemId: product.value.itemId, // Store itemId explicitly for clarity
+    name: product.value.itemName,
+    price: product.value.itemPrice,
+    qty: 1
+  });
+  addSuccess.value = true;
+  setTimeout(() => { addSuccess.value = false; }, 1200);
+}
 </script>
 
 <template>
@@ -79,26 +100,16 @@ onMounted(async () => {
 
     <!-- Product Display -->
     <div v-else-if="product" class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center">
-        <!-- Image -->
-  <div class="w-100 h-100 mb-4 border border-gray-200 shadow rounded flex items-center justify-center bg-white">
-    <img
-      v-if="product.imageUrl"
-      :src="product.imageUrl"
-      alt="Product Image"
-      class="w-full h-full object-contain rounded"
-    />
-    <div v-else class="text-gray-400">No image</div>
-  </div>
-        <!-- Product Info -->
-        <h2 class="text-2xl font-bold text-[#1c4375] mb-2">{{ product.itemName }}</h2>
-        <div class="text-gray-700 mb-2">ID: <span class="font-mono">{{ product.itemId }}</span></div>
-        <div class="text-green-700 font-bold text-lg mb-2">BHD {{ product.itemPrice }}</div>
-        <div class="text-blue-700 font-bold text-lg mb-4">Qty in Stock: {{ product.itemQty }}</div>
-        
-        <!-- Description -->
-        <div class="text-gray-600 text-base mb-2" v-if="product.itemDesc">{{ product.itemDesc }}</div>
-        <div class="text-gray-400 text-sm italic" v-else>No description available.</div>
-      </div>
+      <img v-if="product.imageUrl" :src="product.imageUrl" alt="Item Image" class="w-full h-full object-contain rounded mb-4 border border-gray-200 shadow" />
+      <div v-else class="w-40 h-40 flex items-center justify-center bg-gray-100 rounded text-gray-400 mb-4">No image</div>
+      <h2 class="text-2xl font-bold text-[#1c4375] mb-2">{{ product.itemName }}</h2>
+      <div class="text-gray-700 mb-2">ID: <span class="font-mono">{{ product.itemId }}</span></div>
+      <div class="text-green-700 font-bold text-lg mb-2">BHD {{ product.itemPrice }}</div>
+      <div class="text-gray-600 text-base mb-2" v-if="product.itemDesc">{{ product.itemDesc }}</div>
+      <div class="text-gray-400 text-sm italic" v-else>No description available.</div>
+      <button @click="addToCart" class="mt-6 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-500">Add to Cart</button>
+      <div v-if="addSuccess" class="mt-2 text-green-600 font-semibold">Added to cart!</div>
+    </div>
 
       <!-- No Product -->
       <div v-else class="text-center text-gray-600 py-12 text-lg">

@@ -1,3 +1,4 @@
+
 <script setup>
 import { ref, onMounted, watchEffect, onBeforeUnmount } from 'vue';
 import { useRoute } from 'nuxt/app';
@@ -43,6 +44,8 @@ const pageTitles = {
   "/purchase": "BUY",
   "/sales": "SALES",
   "/scan": "SCAN",
+  "/stock-item": "STOCK ITEM",
+  "/customer-sales": "CUSTOMER SALES",
 };
 
 watchEffect(() => {
@@ -55,7 +58,7 @@ const handleMainInteraction = () => {
   clearTimeout(hideTimeout);
   hideTimeout = setTimeout(() => {
     isSidebarOpen.value = false;
-  }, 3000);
+  }, 10000);
 };
 
 onBeforeUnmount(() => {
