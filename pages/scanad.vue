@@ -35,7 +35,7 @@ const startCamera = async () => {
             beepSound.play().catch(error => console.error("Beep sound error:", error));
           }
           // Navigate to items page with the scanned barcode
-          router.push(`/products/items?barcode=${barcode.value}`);
+          router.push(`/products/itemsad?barcode=${barcode.value}`);
           stopCamera();
         }
       });
@@ -76,7 +76,7 @@ const toggleCamera = () => {
 // Manual barcode submission
 const submitBarcode = () => {
   if (barcode.value) {
-    router.push(`/products/items?barcode=${barcode.value}`);
+    router.push(`/products/itemsad?barcode=${barcode.value}`);
   }
 };
 

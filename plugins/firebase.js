@@ -15,16 +15,16 @@ const firebaseConfig = {
 };
 
 export default defineNuxtPlugin(nuxtApp => {
-   // Initialize Firebase
-   const app = initializeApp(firebaseConfig);
-
-   // Initialize Firebase services
-   const auth = getAuth(app);
-   const firestore = getFirestore(app);
-   const storage = getStorage(app);
-
-  // Always return an object, even if empty, for SSR safety
-  nuxtApp.provide("auth", auth);
-  nuxtApp.provide("firestore", firestore);
-  nuxtApp.provide("storage", storage);
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    
+    // Initialize Firebase services
+    const auth = getAuth(app);
+    const firestore = getFirestore(app);
+    const storage = getStorage(app);
+    
+    // Always return an object, even if empty, for SSR safety
+    nuxtApp.provide("auth", auth);
+    nuxtApp.provide("firestore", firestore);
+    nuxtApp.provide("storage", storage);
 });

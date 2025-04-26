@@ -1,4 +1,3 @@
-
 <template>
    <header  class="w-[calc(100%-0.5rem)] h-[73px] bg-white border-2 border-[#2170d4] flex items-center px-4 fixed top-1 left-1 right-1 z-50 rounded-[15px] shadow-lg">
      <button
@@ -30,10 +29,10 @@
          <span class="sr-only">Toggle Dark Mode</span>
        </label>
      </div> -->
-     <div class="flex items-center ml-auto gap-6">
+     <div class="flex items-center ml-auto gap-3">
        <!-- Cart Icon with Badge -->
        <div class="relative" @click="showCart = !showCart">
-         <button class="relative focus:outline-none">
+         <button class="flex items-center gap-2 focus:outline-none">
            <span class="material-symbols-outlined text-3xl text-[#2170d4]">shopping_cart</span>
            <span v-if="cartItems.length" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1">{{ cartItems.length }}</span>
          </button>
@@ -58,7 +57,18 @@
            </div>
          </div>
        </div>
-       <a @click="logout" class="text-blue-950 text-xl sm:text-2xl md:text-3xl hover:text-[#2170d4] cursor-pointer">
+       <!-- Profile Dropdown -->
+       <div class="relative" @click="showProfile = !showProfile">
+         <button class="flex items-center focus:outline-none">
+           <span class="material-symbols-outlined text-3xl text-[#2170d4]">account_circle</span>
+           <span>{{ userName }}</span>
+         </button>
+         <div v-if="showProfile" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg z-50 p-2">
+           <div class="font-semibold">{{ userName }}</div>
+           <div class="text-sm text-gray-600">{{ userEmail }}</div>
+         </div>
+       </div>
+       <a @click="logout" class="text-blue-950 text-xl sm:text-xl md:text-2xl pl-2 hover:text-[#2170d4] cursor-pointer">
          LOGOUT
        </a>
      </div>
@@ -66,9 +76,9 @@
  </template>
  
 <script setup>
-import { ref, onMounted, computed } from 'vue';
-import { signOut } from 'firebase/auth';
-import { navigateTo } from '#app';
+import { ref, onMounted, computed, onUnmounted } from 'vue';
+import { signOut, onAuthStateChanged } from 'firebase/auth';
+import { navigateTo, useNuxtApp } from '#app';
 import { useCartStore } from '~/stores/cart';
 
 const emit = defineEmits(['toggleSidebar']);
@@ -80,8 +90,23 @@ const showCart = ref(false);
 const cartStore = useCartStore();
 const cartItems = computed(() => cartStore.items);
 
+// Profile dropdown state
+const showProfile = ref(false);
+const user = ref(null);
+const userName = computed(() => user.value?.email?.split('@')[0] || '');
+const userEmail = computed(() => user.value?.email || '');
+
+// Fetch auth user
+onMounted(() => {
+  const { $auth } = useNuxtApp();
+  user.value = $auth.currentUser;
+  onAuthStateChanged($auth, u => { user.value = u; });
+});
+
 function syncCartAndGoToPurchase() {
+  // Store cart to session and clear immediately
   sessionStorage.setItem('cartSync', JSON.stringify(cartStore.items.map(item => ({ itemId: item.itemId || item.id, qty: item.qty }))));
+  clearCart();
   navigateTo('/purchase');
 }
 
@@ -128,4 +153,3 @@ onMounted(() => {
  if (isDark.value) applyDarkReader();
 });
  </script>
- 
