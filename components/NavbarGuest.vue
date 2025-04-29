@@ -31,7 +31,7 @@
         </label>
     </div> -->
     <div class="ml-auto">
-        <NuxtLink to="/login" class="text-blue-950 text-xl sm:text-xl md:text-2xl hover:text-[#2170d4]">
+        <NuxtLink to="/login" class="text-blue-950 text-xl sm:text-2xl md:text-2xl hover:text-[#2170d4] cursor-pointer">
             LOGIN
         </NuxtLink>
     </div>

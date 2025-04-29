@@ -32,7 +32,7 @@
             </ul>
           </div>
         </div>
-        <a @click="logout" class="text-blue-950 text-xl sm:text-2xl md:text-3xl hover:text-[#2170d4] cursor-pointer pl-3">LOGOUT</a>
+        <a @click="logout" class="text-blue-950 text-xl sm:text-2xl md:text-2xl hover:text-[#2170d4] cursor-pointer pl-3">LOGOUT</a>
     </div>
 </header>
 </template>

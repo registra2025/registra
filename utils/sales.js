@@ -58,11 +58,54 @@ export async function completeSaleAndSaveReceipt(sale) {
     payment: sale.payment,
     timestamp: Date.now()
   }
-  await setDoc(doc($firestore, 'users', sale.customerId, 'receipts', receiptId), receiptData)
+  // Write receipt to user if customerId is present and valid
+  if (sale.customerId) {
+    // Coerce DocumentReference or string to ID
+    let customerIdStr = sale.customerId
+    if (typeof sale.customerId !== 'string' && sale.customerId.id) {
+      customerIdStr = sale.customerId.id
+    }
+    if (typeof customerIdStr === 'string') {
+      try {
+        await setDoc(
+          doc(
+            $firestore,
+            'users',
+            String(customerIdStr),
+            'receipts',
+            String(receiptId)
+          ),
+          receiptData
+        )
+      } catch (err) {
+        console.error('Error saving user receipt:', err)
+      }
+    } else {
+      console.warn('Invalid customerId on sale, skipping user receipt write:', sale.customerId)
+    }
+  } else {
+    console.warn('No customerId on sale, skipping user receipt write')
+  }
   // Optionally, save to a global sales collection
-  await setDoc(doc($firestore, 'completed_sales', receiptId), receiptData)
+  await setDoc(doc($firestore, 'completed_sales', String(receiptId)), receiptData)
+  // Record aggregated sales stats per item, skipping invalid IDs
+  for (const item of sale.items) {
+    const statsId = item.itemId ?? item.id
+    if (typeof statsId !== 'string') {
+      console.warn('Skipping sales_stats for item without valid id:', item)
+      continue
+    }
+    const statsRef = doc($firestore, 'sales_stats', String(statsId))
+    const statsSnap = await getDoc(statsRef)
+    const qty = item.quantity ?? item.qty ?? 0
+    if (!statsSnap.exists()) {
+      await setDoc(statsRef, { itemName: item.itemName || item.name, qty })
+    } else {
+      await updateDoc(statsRef, { qty: increment(qty) })
+    }
+  }
   // Decrement inventory quantities
   await decrementInventoryQuantities(sale.items)
   // Remove from pending sales
-  await deleteDoc(doc($firestore, 'pending_sales', sale.id))
+  await deleteDoc(doc($firestore, 'pending_sales', String(sale.id)))
 }

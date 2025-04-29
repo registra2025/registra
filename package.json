@@ -16,6 +16,7 @@
     "@vercel/analytics": "^1.5.0",
     "@vueuse/firebase": "^12.8.2",
     "@zxing/browser": "^0.1.5",
+    "chart.js": "^4.3.0",
     "firebase": "^11.4.0",
     "html2pdf.js": "^0.10.3",
     "jspdf": "^3.0.1",

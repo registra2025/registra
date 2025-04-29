@@ -13,7 +13,7 @@
             
             <!-- Buttons -->
             <button @click="login" class="w-full bg-[#2170d4] text-white p-3 mt-4 rounded-md hover:opacity-80">LOGIN</button>
-            <button @click="signUp" class="w-full bg-[#2170d4] text-white p-3 mt-2 rounded-md hover:opacity-80">SIGN UP</button>
+            <!-- <button @click="signUp" class="w-full bg-[#2170d4] text-white p-3 mt-2 rounded-md hover:opacity-80">SIGN UP</button> -->
             <button @click="googleSignIn" class="w-full bg-red-500 text-white p-3 mt-2 rounded-md hover:opacity-80">SIGN IN WITH GOOGLE</button>
         </div>
     </main>
