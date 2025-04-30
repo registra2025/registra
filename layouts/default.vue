@@ -11,7 +11,7 @@ import NavbarUser from '~/components/NavbarUser.vue';
 import NavbarAdmin from '~/components/NavbarAdmin.vue';
 
 // Sidebar toggle
-const isSidebarOpen = ref(true);
+const isSidebarOpen = ref(false);
 const toggleSidebar = () => { isSidebarOpen.value = !isSidebarOpen.value; };
 
 // Track user and admin via Firebase auth
@@ -31,8 +31,6 @@ const route = useRoute();
 const pageTitle = ref("REGISTRA");
 const isSidebarHovered = ref(false);
 
-
-
 const pageTitles = {
     "/dashboard": "DASHBOARD",
     "/dashboard-admin": "DASHBOARD-ADMIN",
@@ -50,6 +48,7 @@ const pageTitles = {
     "/scan": "SCAN",
     "/stock-item": "STOCK ITEM",
     "/customer-sales": "CUSTOMER SALES",
+    "/customer-receipts": "CUSTOMER RECEIPTS"
 };
 
 watchEffect(() => {
@@ -69,10 +68,21 @@ const handleMainInteraction = () => {
 onBeforeUnmount(() => {
     clearTimeout(hideTimeout);
 });
+
+// Splash screen visibility
+const splashVisible = ref(true);
+onMounted(() => setTimeout(() => splashVisible.value = false, 500));
 </script>
 
 <template>
-    <div class="min-h-screen w-screen overflow-x-hidden overflow-y-hidden flex flex-col">
+    <div v-if="splashVisible" class="fixed inset-0 flex flex-col items-center justify-center bg-white z-50">
+        <img src="/reg_logo_rm.png" alt="Registra Logo" class="h-16 lg:h-24 mb-4" />
+        <svg class="animate-spin h-6 w-6 lg:h-8 lg:w-8 text-[#2170d4]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+        </svg>
+    </div>
+    <div v-else class="min-h-screen w-screen overflow-x-hidden overflow-y-hidden flex flex-col">
         <!-- Fixed Navbar -->
         <div class="fixed top-0 left-0 right-0 z-50">
             <NavbarGuest v-if="!user" @toggleSidebar="toggleSidebar" />
@@ -83,9 +93,11 @@ onBeforeUnmount(() => {
         <!-- Sidebar + Main Content -->
         <div class="flex pt-[74px] h-[100vh]">
             <!-- Sidebar -->
-            <div class="bg-[#63bff7] border-2 border-[#2170d4] flex-shrink-0 m-2 transition-all duration-300 rounded-[15px] shadow-lg overflow-y-auto"
-            @mouseenter="isSidebarHovered = true"
-            @mouseleave="isSidebarHovered = false"
+            <div
+              class="bg-[#63bff7] border-2 border-[#2170d4] flex-shrink-0 m-2 rounded-[15px] shadow-lg overflow-y-auto transform transition-transform duration-300 ease-in-out"
+              :class="{ 'translate-x-0': isSidebarOpen, '-translate-x-full': !isSidebarOpen }"
+              @mouseenter="isSidebarHovered = true"
+              @mouseleave="isSidebarHovered = false"
             >
             <component
             :is="isAdmin ? SidebarAdmin : user ? SidebarUser : Sidebar"

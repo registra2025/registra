@@ -16,7 +16,7 @@
                 <NuxtLink to="/about" class="h-[49px] bg-[#c0e6fd] rounded-[7px] flex items-center text-blue-950 pl-4 text-xl sm:text-2xl font-normal hover:bg-[#95d7fb] active:bg-[#95d7fb]">ABOUT US</NuxtLink>
                 <NuxtLink to="/contact" class="h-[49px] bg-[#c0e6fd] rounded-[7px] flex items-center text-blue-950 pl-4 text-xl sm:text-2xl font-normal hover:bg-[#95d7fb] active:bg-[#95d7fb]">CONTACT US</NuxtLink>
                 <NuxtLink to="/faq" class="h-[49px] bg-[#c0e6fd] rounded-[7px] flex items-center text-blue-950 pl-4 text-xl sm:text-2xl font-normal hover:bg-[#95d7fb] active:bg-[#95d7fb]">FAQ</NuxtLink>
-                <NuxtLink to="/pricing" class="h-[49px] bg-[#c0e6fd] rounded-[7px] flex items-center text-blue-950 pl-4 text-xl sm:text-2xl font-normal hover:bg-[#95d7fb] active:bg-[#95d7fb]">PRICING</NuxtLink>
+                <NuxtLink to="/privacy-policy" class="h-[49px] bg-[#c0e6fd] rounded-[7px] flex items-center text-blue-950 pl-4 text-xl sm:text-2xl font-normal hover:bg-[#95d7fb] active:bg-[#95d7fb]">PRIVACY POLICY</NuxtLink>
             </div>
         </div>
     </aside>

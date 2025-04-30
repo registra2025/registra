@@ -1,3 +1,35 @@
+<template>
+  <div class="flex flex-col items-center justify-center max-h-screen p-4">
+    <h1 class="text-2xl font-bold text-blue-950 mb-4">Scan Product Barcode</h1>
+
+    <!-- Video Stream -->
+    <video ref="videoRef" class="border rounded-xl w-full max-w-md" v-show="isCameraActive"></video>
+
+    <!-- Editable Barcode Input -->
+    <div class="mt-4 w-full max-w-md">
+      <label class="block text-[#2170d4] text-lg font-semibold mb-1">Scanned Code:</label>
+      <div class="flex gap-2">
+        <input 
+          type="text" 
+          v-model="barcode" 
+          class="w-full px-4 py-2  border rounded-lg text-lg"
+        />
+        <!-- <button 
+          @click="submitBarcode"
+          class="px-4 py-2 bg-[#2966b1] text-white rounded-lg hover:bg-[#1e4c8a]"
+        >
+          Submit
+        </button> -->
+      </div>
+    </div>
+
+    <!-- Start/Stop Button -->
+    <button @click="toggleCamera" class="mt-4 px-6 py-3 bg-[#2170d4] text-white rounded-lg hover:bg-blue-400">
+      {{ isCameraActive ? 'Stop Camera' : 'Start Camera' }}
+    </button>
+  </div>
+</template>
+
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 import { BrowserMultiFormatReader } from '@zxing/browser';
@@ -85,35 +117,3 @@ onUnmounted(() => {
   stopCamera();
 });
 </script>
-
-<template>
-  <div class="flex flex-col items-center justify-center max-h-screen p-4">
-    <h1 class="text-2xl font-bold text-blue-950 mb-4">Scan Product Barcode</h1>
-
-    <!-- Video Stream -->
-    <video ref="videoRef" class="border w-full max-w-md" v-show="isCameraActive"></video>
-
-    <!-- Editable Barcode Input -->
-    <div class="mt-4 w-full max-w-md">
-      <label class="block text-[#2170d4] text-lg font-semibold mb-1">Scanned Code:</label>
-      <div class="flex gap-2">
-        <input 
-          type="text" 
-          v-model="barcode" 
-          class="w-full px-4 py-2  border rounded-lg text-lg"
-        />
-        <!-- <button 
-          @click="submitBarcode"
-          class="px-4 py-2 bg-[#2966b1] text-white rounded-lg hover:bg-[#1e4c8a]"
-        >
-          Submit
-        </button> -->
-      </div>
-    </div>
-
-    <!-- Start/Stop Button -->
-    <button @click="toggleCamera" class="mt-4 px-6 py-3 bg-[#2170d4] text-white rounded-lg hover:bg-blue-400">
-      {{ isCameraActive ? 'Stop Camera' : 'Start Camera' }}
-    </button>
-  </div>
-</template>

@@ -16,9 +16,9 @@
                 <NuxtLink to="/stock-record" class="min-h-[49px] bg-[#c0e6fd] rounded-[7px] flex items-center pl-4 text-blue-950 text-xl sm:text-2xl md:text-2xl font-normal hover:bg-[#95d7fb] active:bg-[#95d7fb]">
                     STOCK RECORD
                 </NuxtLink>
-                <NuxtLink to="/performance" class="min-h-[49px] bg-[#c0e6fd] rounded-[7px] flex items-center pl-4 text-blue-950 text-xl sm:text-2xl md:text-2xl font-normal hover:bg-[#95d7fb] active:bg-[#95d7fb]">
+                <!-- <NuxtLink to="/performance" class="min-h-[49px] bg-[#c0e6fd] rounded-[7px] flex items-center pl-4 text-blue-950 text-xl sm:text-2xl md:text-2xl font-normal hover:bg-[#95d7fb] active:bg-[#95d7fb]">
                     PERFORMANCE
-                </NuxtLink>
+                </NuxtLink> -->
                 <!-- <NuxtLink to="/sales-receipt" class="min-h-[49px] bg-[#c0e6fd] rounded-[7px] flex items-center pl-4 text-blue-950 text-xl sm:text-2xl md:text-2xl font-normal hover:bg-[#95d7fb] active:bg-[#95d7fb]">
                     SALES RECEIPTS
                 </NuxtLink> -->

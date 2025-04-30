@@ -36,7 +36,14 @@
                     </div>
                     <!-- Payment and Summary Info -->
                     <div class="summary-section mb-4">
-                        <div><strong>Payment Method:</strong> {{ sale.payment }}</div>
+                        <div>
+                            <label class="block mb-1">Payment Method</label>
+                            <select v-model="sale.payment" class="w-full border px-3 py-2 rounded text-blue-950 bg-white dark:bg-[#dcf0fd]">
+                                <option>Cash</option>
+                                <option>Card</option>
+                                <option>Tabby</option>
+                            </select>
+                        </div>
                         <div><strong>Total:</strong> {{ formatCurrency(sale.total) }}</div>
                     </div>
                     <div class="flex gap-2">

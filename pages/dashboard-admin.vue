@@ -1,13 +1,27 @@
 <template>
-  <section class="flex flex-col h-screen p-10 bg-gray-100">
-    <div class="flex justify-between items-start gap-4">
-      <NuxtLink to="/scanpr" class="w-[258px] h-40 bg-[#63bff7] text-blue-950 text-xl rounded-[7px] flex items-center justify-center transition hover:bg-blue-400 active:shadow-inner">
+  <div v-if="splashVisible" class="fixed inset-0 flex flex-col items-center justify-center bg-white z-50">
+    <img src="/reg_logo_rm.png" alt="Registra Logo" class="h-16 lg:h-24 mb-4" />
+    <svg class="animate-spin h-6 w-6 lg:h-8 lg:w-8 text-[#2170d4]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+    </svg>
+  </div>
+  <section v-else class="flex flex-col h-screen p-10 bg-gray-100 rounded-xl">
+    <div class="flex justify-start items-start gap-4">
+      <NuxtLink to="/scanpr" class="flex-1 h-40 bg-[#63bff7] text-blue-950 text-xl rounded-[7px] flex items-center justify-center transition hover:bg-blue-400 active:shadow-inner">
         SCAN
       </NuxtLink>
-      <div class="w-74 h-40 bg-white shadow rounded p-4 overflow-hidden">
+      <div class="w-114 h-40 bg-white shadow rounded p-4 overflow-hidden">
         <h3 class="text-lg font-semibold mb-2">Notifications</h3>
         <marquee direction="up" scrollamount="2" class="h-full">
-          <div v-for="(n, i) in notifications" :key="i" class="py-1">{{ n }}</div>
+          <div
+            v-for="(n, i) in notifications"
+            :key="i"
+            class="py-1 border-b border-gray-200"
+            :class="{ 'text-red-500': n.severity === 'critical', 'text-orange-500': n.severity === 'warning' }"
+          >
+            {{ n.message }}
+          </div>
         </marquee>
       </div>
     </div>
@@ -16,7 +30,7 @@
       <div class="p-6">
         <h3 class="text-xl font-bold">Reports</h3>
       </div>
-      <div class="bg-white shadow rounded p-5 flex gap-4 h-100">
+      <div class="bg-white shadow rounded p-5 flex gap-4 h-80">
         <div class="w-1/2 flex flex-col items-center">
           <h4 class="text-lg font-semibold mb-2 text-center">Inventory</h4>
           <PieChart :chartData="pieData" />
@@ -51,6 +65,9 @@ const barData = ref({ labels: [], datasets: [{ label: 'Stock Qty', data: [], bac
 const { $firestore } = useNuxtApp()
 const inventory = ref([])
 const receipts = ref([])
+
+const splashVisible = ref(true)
+if (process.client) setTimeout(() => (splashVisible.value = false), 500)
 
 onMounted(() => {
   let unsubscribeInv = () => {}

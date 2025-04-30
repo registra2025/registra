@@ -1,5 +1,9 @@
 <template>
-  <canvas ref="canvas"></canvas>
+  <div class="chart-wrapper">
+    <div class="bar-wrapper">
+      <canvas ref="canvas"></canvas>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -45,7 +49,17 @@ watch(() => props.chartData, (newData) => {
 </script>
 
 <style scoped>
-canvas {
+.chart-wrapper {
   width: 100%;
-  height: 300px;}
+  max-width: 200px;
+  margin: 0 auto;
+}
+.bar-wrapper {
+  width: 100%;
+  height: 220px;
+}
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
 </style>

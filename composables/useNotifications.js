@@ -11,11 +11,14 @@ export function useNotifications() {
     snapshot => {
       notifications.value = snapshot.docs.map(doc => {
         const item = doc.data()
-        // Strip 'by author' suffix and only show name and quantity
         const rawName = item.itemName || ''
         const name = rawName.includes(' by ') ? rawName.split(' by ')[0] : rawName
-        if (item.itemQty < 20) return { message: `${name} is low on stock. Remaining: ${item.itemQty}`, severity: 'critical' }
-        if (item.itemQty < 50) return { message: `${name} is low on stock. Remaining: ${item.itemQty}`, severity: 'warning' }
+        if (item.itemQty < 20) {
+          return { message: `${name} is critically low on stock. Remaining: ${item.itemQty}`, severity: 'critical' }
+        }
+        if (item.itemQty < 50) {
+          return { message: `${name} is low on stock. Remaining: ${item.itemQty}`, severity: 'warning' }
+        }
         return null
       }).filter(n => n)
     },

@@ -75,7 +75,8 @@
                                 <span class="w-6 text-center">{{ item.qty }}</span>
                                 <button
                                 @click="increaseQty(index)"
-                                class="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600"
+                                :disabled="item.qty >= Math.min(item.stock, 10)"
+                                class="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 disabled:opacity-50"
                                 >+</button>
                             </div>
                         </td>
@@ -92,15 +93,6 @@
         <!-- Summary Section -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="space-y-4">
-                <div>
-                    <label class="block mb-1">Payment Method</label>
-                    <!-- Payment -->
-                    <select v-model="payment" class="w-full border px-3 py-2 rounded text-blue-950 bg-white dark:bg-[#dcf0fd]">
-                        <option>Cash</option>
-                        <option>Card</option>
-                        <option>Tabby</option>
-                    </select>
-                </div>
             </div>
             
             <div class="text-blue-950 bg-white dark:bg-[#dcf0fd] p-4 rounded space-y-2">
@@ -260,16 +252,26 @@ const handleScannedBarcode = async (barcode, qty = 1) => {
             data = docSnap.data();
         }
         const idVal = data.itemId;
-        // Add or update in products
+        const stock = data.itemQty ?? 0;
+        const maxAllowed = Math.min(stock, 10);
         const existing = products.value.find(item => item.id === idVal);
         if (existing) {
-            existing.qty += qty;
+            const newQty = Math.min(existing.qty + qty, maxAllowed);
+            if (newQty < existing.qty + qty) {
+                alert(`Only ${maxAllowed} allowed for ${data.itemName}`);
+            }
+            existing.qty = newQty;
         } else {
+            const initialQty = Math.min(qty, maxAllowed);
+            if (initialQty < qty) {
+                alert(`Only ${maxAllowed} allowed for ${data.itemName}`);
+            }
             products.value.push({
                 id: idVal,
                 name: data.itemName,
                 price: data.itemPrice,
-                qty
+                qty: initialQty,
+                stock
             });
         }
     } catch (err) {
@@ -279,7 +281,11 @@ const handleScannedBarcode = async (barcode, qty = 1) => {
 };
 
 function increaseQty(index) {
-    products.value[index].qty += 1;
+    const item = products.value[index];
+    const maxAllowed = Math.min(item.stock ?? Infinity, 10);
+    if (item.qty < maxAllowed) {
+        item.qty += 1;
+    }
 }
 
 function decreaseQty(index) {

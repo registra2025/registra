@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col items-center justify-center max-h-screen p-4">        
         <!-- Video Stream -->
-        <video ref="videoRef" class="border w-80 max-w-md" v-show="isCameraActive"></video>
+        <video ref="videoRef" class="border rounded-xl w-80 max-w-md" v-show="isCameraActive"></video>
         
         <!-- Start/Stop Button -->
         <button 

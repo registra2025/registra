@@ -18,6 +18,7 @@
                         <th class="p-3 font-semibold text-left">Price</th>
                         <th class="p-3 font-semibold text-left">Quantity</th>
                         <th class="p-3 font-semibold text-left">Description</th>
+                        <th class="p-3 font-semibold text-left">Action</th>
                     </tr>
                     
                 </thead>
@@ -40,6 +41,12 @@
                       {{ item.itemQty }}
                     </td>
                     <td class="p-2 font-semibold">{{ item.itemDesc }}</td>
+                    <td class="p-2">
+                      <div class="flex gap-2">
+                        <button @click.stop.prevent="editPrice(item.id, item.itemPrice)" class="text-blue-500 hover:text-blue-700">Edit</button>
+                        <button @click.stop.prevent="confirmDelete(item.id)" class="text-red-500 hover:text-red-700">Delete</button>
+                      </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -65,11 +72,8 @@
 </template>
 
 <script setup>
-definePageMeta({
-    middleware: 'auth-global'
-});
 import { ref, onMounted } from "vue";
-import { collection, getDocs, onSnapshot } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, deleteDoc, doc, updateDoc } from "firebase/firestore";
 
 // Use Firestore from Nuxt plugin
 const { $firestore } = useNuxtApp();
@@ -78,15 +82,40 @@ const db = $firestore;
 // Reactive inventory list
 const inventory = ref([]);
 
+// Confirm and delete an item
+const confirmDelete = async (id) => {
+  if (!confirm("Are you sure you want to delete this item?")) return;
+  try {
+    await deleteDoc(doc(db, "inventory", id));
+    // Remove locally for immediate UI update
+    inventory.value = inventory.value.filter(item => item.id !== id);
+  } catch (err) {
+    console.error("Delete failed:", err);
+  }
+};
+
+// Prompt and update item price
+const editPrice = async (id, currentPrice) => {
+  const newPrice = prompt("Enter new price:", currentPrice);
+  if (newPrice === null) return;
+  const parsed = parseFloat(newPrice);
+  if (isNaN(parsed)) { alert("Invalid price."); return; }
+  try {
+    await updateDoc(doc(db, "inventory", id), { itemPrice: parsed });
+    const it = inventory.value.find(i => i.id === id);
+    if (it) it.itemPrice = parsed;
+  } catch (err) {
+    console.error("Update failed:", err);
+  }
+};
+
 // Fetch inventory data from Firestore
 const fetchInventory = async () => {
     if (!process.client) return;
     try {
         const querySnapshot = await getDocs(collection(db, "inventory"));
-        inventory.value = querySnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-        }));
+        inventory.value = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+            .sort((a, b) => a.itemName.localeCompare(b.itemName));
     } catch (err) {
         console.error('Firebase error:', err);
     }
@@ -95,10 +124,8 @@ const fetchInventory = async () => {
 // Real-time listener for Firestore changes
 onMounted(() => {
     const unsubscribe = onSnapshot(collection(db, "inventory"), (snapshot) => {
-        inventory.value = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-        }));
+        inventory.value = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+            .sort((a, b) => a.itemName.localeCompare(b.itemName));
     });
     
     return () => unsubscribe();
