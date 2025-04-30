@@ -3,7 +3,7 @@
         <div class="max-w-2xl mx-auto px-4">
             <button @click="router.back()" class="mb-4 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 text-[#1c4375]">Back</button>
             <div v-if="loading" class="flex flex-col items-center justify-center py-16">
-                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#2966b1]"></div>
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#2966b1]"></div> 
                 <p class="mt-4 text-gray-600 text-lg">Loading item details...</p>
             </div>
             <div v-else-if="error" class="text-center text-red-500 text-lg py-12">{{ error }}</div>

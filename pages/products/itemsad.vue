@@ -47,7 +47,7 @@
                             </div>
                             <div>
                                 <h3 class="text-sm font-medium text-gray-500">Price</h3>
-                                <p class="text-lg font-semibold">${{ product.itemPrice.toFixed(2) }}</p>
+                                <p class="text-lg font-semibold">BHD {{ product.itemPrice.toFixed(2) }}</p>
                             </div>
                             <div>
                                 <h3 class="text-sm font-medium text-gray-500">Quantity in Stock</h3>

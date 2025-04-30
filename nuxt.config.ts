@@ -12,6 +12,13 @@ export default defineNuxtConfig({
     devtools: { enabled: true },
     // pages: false,
     css: ['@/assets/css/main.css'],
+    app: {
+      head: {
+        link: [
+          { rel: 'icon', type: 'image/png', href: '/registra_logo_rm.png' }
+        ]
+      }
+    },
     vite: {
         plugins: [
             tailwindcss(),

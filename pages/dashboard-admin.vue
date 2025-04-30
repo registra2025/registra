@@ -8,7 +8,7 @@
   </div>
   <section v-else class="flex flex-col h-screen p-10 bg-gray-100 rounded-xl">
     <div class="flex justify-start items-start gap-4">
-      <NuxtLink to="/scanpr" class="flex-1 h-40 bg-[#63bff7] text-blue-950 text-xl rounded-[7px] flex items-center justify-center transition hover:bg-blue-400 active:shadow-inner">
+      <NuxtLink to="/scanad" class="flex-1 h-40 bg-[#63bff7] text-blue-950 text-xl rounded-[7px] flex items-center justify-center transition hover:bg-blue-400 active:shadow-inner">
         SCAN
       </NuxtLink>
       <div class="w-114 h-40 bg-white shadow rounded p-4 overflow-hidden">
