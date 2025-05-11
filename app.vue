@@ -25,7 +25,7 @@ useHead({
 
 <template>
     <NuxtLayout>
-        <NuxtPage :key="$route.fullPath" />
+        <NuxtPage />
         <!-- <Analytics /> -->
     </NuxtLayout>
 </template>

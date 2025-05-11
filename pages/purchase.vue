@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4 bg-[#63bff7] min-h-screen text-gray-800 dark:text-white rounded-[17px] -m-4">
+    <div class="p-4 bg-primary min-h-screen text-gray-800 dark:text-white rounded-[17px] -m-4">
         <div v-if="loading" class="flex flex-col items-center justify-center py-16">
             <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#2966b1]"></div>
             <p class="mt-4 text-gray-600 text-lg">Loading product details...</p>
@@ -7,7 +7,7 @@
         <!-- Header -->
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl text-blue-950 font-bold">New Purchase</h1>
-            <NuxtLink to="/dashboard" class="bg-[#2170d4] text-white px-4 py-2 rounded hover:bg-blue-400">
+            <NuxtLink to="/dashboard" class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-hover">
                 Go Back
             </NuxtLink>
         </div>
@@ -41,7 +41,7 @@
             placeholder="Scan barcode or enter product"
             v-model="scannedCode"
             />
-            <button @click="handleManualBarcode" class="bg-[#2170d4] text-white px-4 py-2 rounded hover:bg-blue-400">
+            <button @click="handleManualBarcode" class="bg-primary text-black px-4 py-2 border border-primary rounded transition hover:bg-blue-300 active:shadow-inner active:bg-blue-300">
                 Enter
             </button>
             <button @click="toggleCamera" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">
@@ -63,7 +63,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="(item, index) in products" :key="index" class="border-t">
-                        <td class="px-4 py-2">{{ item.name }}</td>
+                        <td class="px-4 py-2 text-black">{{ item.name }}</td>
                         <!-- Qty Controls -->
                         <td class="px-4 py-2">
                             <div class="flex items-center space-x-2">
@@ -72,7 +72,7 @@
                                 class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 disabled:opacity-50"
                                 :disabled="item.qty <= 1"
                                 >−</button>
-                                <span class="w-6 text-center">{{ item.qty }}</span>
+                                <span class="w-6 text-center text-black">{{ item.qty }}</span>
                                 <button
                                 @click="increaseQty(index)"
                                 :disabled="item.qty >= Math.min(item.stock, 10)"
@@ -80,8 +80,8 @@
                                 >+</button>
                             </div>
                         </td>
-                        <td class="px-4 py-2">BHD {{ item.price }}</td>
-                        <td class="px-4 py-2">BHD {{ item.qty * item.price }}</td>
+                        <td class="px-4 py-2 text-black">BHD {{ item.price }}</td>
+                        <td class="px-4 py-2 text-black">BHD {{ item.qty * item.price }}</td>
                         <td class="px-4 py-2">
                             <button class="text-red-600 hover:underline" @click="removeItem(index)">Remove</button>
                         </td>
@@ -119,7 +119,7 @@
         <div class="mt-6 flex justify-end">
             <button
             @click="completePurchase"
-            class="bg-[#2170d4] text-white px-6 py-3 rounded hover:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="bg-primary text-black px-6 py-3 rounded hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed border border-black transition hover:bg-blue-400 active:shadow-inner active:bg-blue-600"
             :disabled="products.length === 0"
             >
             Proceed to Counter

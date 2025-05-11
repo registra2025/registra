@@ -1,6 +1,6 @@
 <template>
     <div class="min-h-[80vh] flex items-center justify-center">
-        <div class="w-full max-w-md bg-[#63bff7] rounded-2xl shadow-lg p-8 flex flex-col items-center">
+        <div class="w-full max-w-md bg-primary rounded-2xl shadow-lg p-8 flex flex-col items-center">
             <h3 class="text-2xl font-extrabold text-[#1c4375] mb-6">Add Item</h3>
             <div class="w-full flex flex-col gap-4">
                 <input v-model="newItem.itemId" placeholder="Item ID" class="w-full p-3 rounded-lg border border-gray-300 focus:border-[#1c4375] focus:ring-[#1c4375] text-black bg-[#dcf0fd] focus:outline-none transition" />
@@ -48,7 +48,7 @@
             <!-- Buttons -->
             <div class="flex gap-4 mt-6 w-full">
                 <button @click="addNewItem" class="flex-1 bg-[#1c4375] hover:bg-[#2966b1] text-white font-semibold p-3 rounded-lg shadow transition">Add Item</button>
-                <button @click="toggleCamera" class="flex-1 bg-[#2170d4] hover:bg-blue-800 text-white font-semibold p-3 rounded-lg shadow transition">
+                <button @click="toggleCamera" class="flex-1 bg-primary hover:bg-primary-hover text-black font-semibold p-3 rounded-lg shadow transition hover:bg-blue-300 active:shadow-inner active:bg-blue-300">
                     {{ isCameraActive ? 'Stop' : 'Scan' }}
                 </button>
             </div>

@@ -1,6 +1,6 @@
 <template>
     <div class="p-6 max-w-3xl mx-auto space-y-6">
-        <h2 class="text-3xl font-bold text-[#2170d4]">Pricing Plans</h2>
+        <h2 class="text-3xl font-bold text-primary">Pricing Plans</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="border p-4 rounded shadow hover:shadow-lg transition">
                 <h3 class="text-xl font-semibold">Free</h3>

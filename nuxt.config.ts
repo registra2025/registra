@@ -9,13 +9,13 @@ export default defineNuxtConfig({
         isCustomElement: tag => tag === 'marquee'
       }
     },
-    devtools: { enabled: true },
+    // devtools: { enabled: true },
     // pages: false,
     css: ['@/assets/css/main.css'],
     app: {
       head: {
         link: [
-          { rel: 'icon', type: 'image/png', href: '/registra_logo_rm.png' }
+          { rel: 'icon', type: 'image/png', href: '/reg_logo_rm.png' }
         ]
       }
     },

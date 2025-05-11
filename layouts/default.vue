@@ -57,13 +57,13 @@ watchEffect(() => {
 
 // Auto-hide sidebar after 3s if main content is interacted with
 let hideTimeout = null;
-const handleMainInteraction = () => {
-    if (isSidebarHovered.value) return; // Don't auto-close if hovered
-    clearTimeout(hideTimeout);
-    hideTimeout = setTimeout(() => {
-        isSidebarOpen.value = false;
-    }, 5000);
-};
+// const handleMainInteraction = () => {
+//     if (isSidebarHovered.value) return; // Don't auto-close if hovered
+//     clearTimeout(hideTimeout);
+//     hideTimeout = setTimeout(() => {
+//         isSidebarOpen.value = false;
+//     }, 5000);
+// };
 
 onBeforeUnmount(() => {
     clearTimeout(hideTimeout);
@@ -77,7 +77,7 @@ onMounted(() => setTimeout(() => splashVisible.value = false, 500));
 <template>
     <div v-if="splashVisible" class="fixed inset-0 flex flex-col items-center justify-center bg-white z-50">
         <img src="/reg_logo_rm.png" alt="Registra Logo" class="h-16 lg:h-24 mb-4" />
-        <svg class="animate-spin h-6 w-6 lg:h-8 lg:w-8 text-[#2170d4]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <svg class="animate-spin h-6 w-6 lg:h-8 lg:w-8 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
         </svg>
@@ -94,7 +94,7 @@ onMounted(() => setTimeout(() => splashVisible.value = false, 500));
         <div class="flex pt-[74px] h-[100vh]">
             <!-- Sidebar -->
             <div
-              class="bg-[#63bff7] border-2 border-[#2170d4] flex-shrink-0 m-2 rounded-[15px] shadow-lg overflow-y-auto transform transition-transform duration-300 ease-in-out"
+              class="bg-primary border-2 border-primary flex-shrink-0 m-2 rounded-[15px] shadow-lg overflow-y-auto transform transition-transform duration-300 ease-in-out"
               :class="{ 'translate-x-0': isSidebarOpen, '-translate-x-full': !isSidebarOpen }"
               @mouseenter="isSidebarHovered = true"
               @mouseleave="isSidebarHovered = false"
@@ -108,7 +108,7 @@ onMounted(() => setTimeout(() => splashVisible.value = false, 500));
         
         <!-- Main Content -->
         <main
-        class="flex-grow m-2 overflow-y-auto p-4 -ml-0.5 rounded-[15px] border-2 border-[#2170d4] bg-white dark:bg-darkBg shadow-md"
+        class="flex-grow m-2 overflow-y-auto p-4 -ml-0.5 rounded-[15px] border-2 border-primary bg-white dark:bg-darkBg shadow-md"
         @click="handleMainInteraction"
         @mouseenter="handleMainInteraction"
         @touchstart="handleMainInteraction"

@@ -7,7 +7,7 @@
 
     <!-- Editable Barcode Input -->
     <div class="mt-4 w-full max-w-md">
-      <label class="block text-[#2170d4] text-lg font-semibold mb-1">Scanned Code:</label>
+      <label class="block text-primary text-lg font-semibold mb-1">Scanned Code:</label>
       <div class="flex gap-2">
         <input 
           type="text" 
@@ -24,7 +24,7 @@
     </div>
 
     <!-- Start/Stop Button -->
-    <button @click="toggleCamera" class="mt-4 px-6 py-3 bg-[#2170d4] text-white rounded-lg hover:bg-blue-400">
+    <button @click="toggleCamera" class="mt-4 px-6 py-3 bg-primary hover:bg-primary-hover rounded-[7px] border border-primary transition hover:bg-blue-300 active:shadow-inner active:bg-blue-300">
       {{ isCameraActive ? 'Stop Camera' : 'Start Camera' }}
     </button>
   </div>

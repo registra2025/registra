@@ -1,6 +1,6 @@
 <template>
-    <main class="flex items-center justify-center min-h-full w-full rounded-xl bg-gray-100 p-4">
-        <div class="w-full max-w-md bg-[#dcf0fd] shadow-lg rounded-xl p-8">
+    <main class="flex items-center justify-center min-h-full w-full rounded-xl bg-primary p-4">
+        <div class="w-full max-w-md bg-secondary shadow-lg rounded-xl p-8">
             <h2 class="text-2xl font-bold text-blue-950 text-center mb-6">LOGIN / SIGNUP</h2>
             
             <label class="block text-gray-700">User ID</label>
@@ -12,9 +12,9 @@
             class="w-full p-3 mt-1 rounded-md border text-black border-gray-300 bg-[#dcf0fd] focus:outline-none focus:border-[#1c4375]">
             
             <!-- Buttons -->
-            <button @click="googleSignIn" class="w-full bg-red-500 text-white p-3 mt-4 rounded-md hover:opacity-80">SIGN IN WITH GOOGLE</button>
-            <button @click="login" class="w-full bg-[#2170d4] text-white p-3 mt-2 rounded-md hover:opacity-80">LOGIN</button>
-            <!-- <button @click="signUp" class="w-full bg-[#2170d4] text-white p-3 mt-2 rounded-md hover:opacity-80">SIGN UP</button> -->
+            <button @click="login" class="w-full bg-primary text-text p-3 mt-4 border border-black rounded-md transition hover:bg-blue-300 active:shadow-inner active:bg-blue-300">LOGIN</button>
+            <button @click="googleSignIn" class="w-full bg-red-500 text-white p-3 mt-2 rounded-md hover:opacity-80">SIGN IN WITH GOOGLE</button>
+            <!-- <button @click="signUp" class="w-full bg-primary hover:bg-primary-hover">SIGN UP</button> -->
             
         </div>
     </main>

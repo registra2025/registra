@@ -12,7 +12,7 @@
         <p><strong>Date:</strong> {{ new Date(receipt.timestamp).toLocaleString() }}</p>
         <p><strong>Total:</strong> BHD {{ receipt.total }}</p>
         <button
-          class="mt-2 text-[#2170d4] hover:underline"
+          class="mt-2 text-blue-500 hover:underline"
           @click="toggleDetails(receipt.id)"
         >
           {{ receipt.showDetails ? 'Hide Details' : 'View Details' }}

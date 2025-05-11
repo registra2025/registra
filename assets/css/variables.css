@@ -1,0 +1,17 @@
+:root {
+  --color-primary: #000000;
+  --color-primary-hover: #333333;
+  --color-secondary: #f3f4f6; /* Light gray for secondary elements */
+  --color-secondary-hover: #a4a6ac; /* Tailwind gray-200 for secondary hover */
+  --color-text: #1f2937; /* Dark gray for text */
+  --color-bg: #FFFFFF;
+}
+
+.dark {
+  --color-primary: #000000;
+  --color-primary-hover: #333333;
+  --color-secondary: #4b5563; /* Medium gray for secondary elements */
+  --color-secondary-hover: #374151; /* Tailwind gray-700 for secondary hover */
+  --color-text: #E5E5E5;
+  --color-bg: #1E1E2D;
+}

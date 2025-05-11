@@ -41,7 +41,7 @@
       
       <!-- Download Button -->
       <div class="mt-4">
-         <button @click="downloadReceipt" class="bg-[#2170d4] text-white px-4 py-2 rounded-md hover:bg-blue-800"> Download Receipt
+         <button @click="downloadReceipt" class="bg-primary text-text px-4 py-2 border border-primary rounded-md hover:bg-primary-hover transition hover:bg-blue-300 active:shadow-inner active:bg-blue-300"> Download Receipt
          </button>
       </div>
       

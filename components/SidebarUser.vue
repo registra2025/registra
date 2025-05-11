@@ -13,8 +13,8 @@
             
             <!-- User Links -->
             <div class="flex flex-col gap-2 w-full overflow-y-auto">
-                <NuxtLink to="/dashboard" class="min-h-[49px] bg-[#c0e6fd] rounded-[7px] flex items-center text-blue-950 pl-4 text-xl sm:text-2xl font-normal hover:bg-[#95d7fb] active:bg-[#95d7fb]">DASHBOARD</NuxtLink>
-                <NuxtLink to="/my-receipts" class="min-h-[49px] bg-[#c0e6fd] rounded-[7px] flex items-center text-blue-950 pl-4 text-xl sm:text-2xl font-normal hover:bg-[#95d7fb] active:bg-[#95d7fb]">MY RECEIPTS</NuxtLink>
+                <NuxtLink to="/dashboard" class="min-h-[49px] bg-[#c0e6fd] rounded-[7px] flex items-center text-blue-950 pl-4 text-xl sm:text-xl md:text-xl font-normal hover:bg-[#95d7fb] active:bg-[#95d7fb]">DASHBOARD</NuxtLink>
+                <NuxtLink to="/my-receipts" class="min-h-[49px] bg-[#c0e6fd] rounded-[7px] flex items-center text-blue-950 pl-4 text-xl sm:text-xl md:text-xl font-normal hover:bg-[#95d7fb] active:bg-[#95d7fb]">MY RECEIPTS</NuxtLink>
             </div>
         </div>
     </aside>

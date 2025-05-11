@@ -1,17 +1,17 @@
 <template>
-  <div v-if="splashVisible" class="fixed inset-0 flex flex-col items-center justify-center bg-white z-50">
+  <!-- <div v-if="splashVisible" class="fixed inset-0 flex flex-col items-center justify-center bg-white z-50">
     <img src="/reg_logo_rm.png" alt="Registra Logo" class="h-16 lg:h-24 mb-4" />
-    <svg class="animate-spin h-6 w-6 lg:h-8 lg:w-8 text-[#2170d4]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+    <svg class="animate-spin h-6 w-6 lg:h-8 lg:w-8 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
       <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
       <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
     </svg>
-  </div>
-  <section v-else class="flex flex-col h-screen p-10 bg-gray-100 rounded-xl">
+  </div> -->
+  <section class="flex flex-col h-fit p-10 bg-gray-100 rounded-xl">
     <div class="flex justify-start items-start gap-4">
-      <NuxtLink to="/scanad" class="flex-1 h-40 bg-[#63bff7] text-blue-950 text-xl rounded-[7px] flex items-center justify-center transition hover:bg-blue-400 active:shadow-inner">
+      <NuxtLink to="/scanad" class="flex-1 h-40 bg-primary text-blue-950 text-xl rounded-[7px] border-primary border flex items-center justify-center transition hover:bg-[#c0e6fd] active:shadow-inner active:bg-blue-300">
         SCAN
       </NuxtLink>
-      <div class="w-114 h-40 bg-white shadow rounded p-4 overflow-hidden">
+      <div class="w-114 h-40 bg-white shadow rounded-[7px] p-4 overflow-hidden">
         <h3 class="text-lg font-semibold mb-2">Notifications</h3>
         <marquee direction="up" scrollamount="2" class="h-full">
           <div
@@ -30,7 +30,7 @@
       <div class="p-6">
         <h3 class="text-xl font-bold">Reports</h3>
       </div>
-      <div class="bg-white shadow rounded p-5 flex gap-4 h-80">
+      <div class="bg-white rounded-[7px] shadow p-5 flex gap-4 h-80">
         <div class="w-1/2 flex flex-col items-center">
           <h4 class="text-lg font-semibold mb-2 text-center">Inventory</h4>
           <PieChart :chartData="pieData" />

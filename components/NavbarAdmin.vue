@@ -1,12 +1,12 @@
 <template>
-    <header class="w-[calc(100%-0.5rem)] h-[73px] bg-white border-2 border-[#2170d4] flex items-center px-4 fixed top-1 left-1 right-1 z-50 rounded-[15px] shadow-lg">
+    <header class="w-[calc(100%-0.5rem)] h-[73px] bg-white border-2 border-primary flex items-center px-4 fixed top-1 left-1 right-1 z-50 rounded-[15px] shadow-lg">
         <button
         @click="emit('toggleSidebar')"
-        class="text-[#2170d4] text-[32px] w-13 h-13 p-0.5 border-1 border-[#2170d4] rounded-md transition transform active:scale-90 duration-100 ease-in-out"
+        class="text-[#2170d4] text-[32px] w-13 h-13 p-0.5 border-1 border-primary rounded-md transition transform active:scale-90 duration-100 ease-in-out"
         >
         <span class="material-symbols-outlined">menu</span>
     </button>
-    <h1 class="text-[#2170d4] text-xl sm:text-2xl md:text-3xl ml-4">{{ title }}</h1>
+    <h1 class="text-primary text-xl sm:text-2xl md:text-3xl ml-4">{{ title }}</h1>
     <div class="flex items-center ml-auto gap-3">
         <!-- Profile Dropdown -->
         <div class="relative" @click="showProfile = !showProfile">
@@ -14,7 +14,7 @@
             <span class="material-symbols-outlined text-3xl text-[#2170d4]">account_circle</span>
             <span>{{ userName }}</span>
           </button>
-          <div v-if="showProfile" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg z-50 p-2">
+          <div v-if="showProfile" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-[7px] shadow-lg z-50 p-2">
             <div class="font-semibold">{{ userName }}</div>
             <div class="text-sm text-gray-600">{{ userEmail }}</div>
           </div>
@@ -25,7 +25,7 @@
             <span class="material-symbols-outlined text-3xl text-[#2170d4]">notifications</span>
             <span v-if="notifications.length" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1">{{ notifications.length }}</span>
           </button>
-          <div v-if="showNotifications" class="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded shadow-lg z-50 p-2">
+          <div v-if="showNotifications" class="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-[7px] shadow-lg z-50 p-2">
             <div v-if="!notifications.length" class="text-gray-500 text-sm">No notifications</div>
             <ul>
               <li v-for="(notif, i) in notifications" :key="i" :class="{ 'text-red-500': notif.severity==='critical', 'text-orange-500': notif.severity==='warning' }" class="text-sm p-1">{{ notif.message }}</li>
